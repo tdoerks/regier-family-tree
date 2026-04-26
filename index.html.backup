@@ -395,11 +395,9 @@
                     <label>Family Line</label>
                     <select id="lineFilter" onchange="filterFamily()">
                         <option value="all">All Families</option>
+                        <option value="doerksen">Doerksen Line (Marion)</option>
                         <option value="herman">Herman & Sarah</option>
                         <option value="pete">Pete & Rachel</option>
-                        <option value="ronald">Ronald & Lorie</option>
-                        <option value="donald">Donald & Lisa</option>
-                        <option value="doerksen">Marion & Harold / Doerksen</option>
                         <option value="ruth">Ruth & Curtis</option>
                         <option value="ivan">Ivan & Ann</option>
                     </select>
@@ -416,16 +414,19 @@
                     <label>Generation</label>
                     <select id="genFilter" onchange="filterFamily()">
                         <option value="all">All Generations</option>
-                        <option value="1">Gen 1 (Root Couples)</option>
-                        <option value="2">Gen 2 (Children)</option>
-                        <option value="3">Gen 3 (Grandchildren)</option>
-                        <option value="4">Gen 4 (Great-Grandchildren)</option>
-                        <option value="5">Gen 5 (Great-Great-Grandchildren)</option>
+                        <option value="1">Gen 1 (Great-Grandparents)</option>
+                        <option value="2">Gen 2 (Grandparents)</option>
+                        <option value="3">Gen 3 (Parents)</option>
+                        <option value="4">Gen 4 (Children)</option>
                     </select>
                 </div>
             </div>
 
             <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--doerksen)"></div>
+                    <span>Doerksen Line</span>
+                </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: var(--herman)"></div>
                     <span>Herman & Sarah</span>
@@ -433,18 +434,6 @@
                 <div class="legend-item">
                     <div class="legend-color" style="background: var(--pete)"></div>
                     <span>Pete & Rachel</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--ronald)"></div>
-                    <span>Ronald & Lorie</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--donald)"></div>
-                    <span>Donald & Lisa</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--doerksen)"></div>
-                    <span>Marion & Harold</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: var(--ruth)"></div>
@@ -612,994 +601,215 @@
                 }
             ],
 
-            // Generation 2: Children
+            // Generation 2: Grandparents
             gen2: [
-                // Herman & Sarah's children
                 {
-                    id: 'dale-teresa',
-                    name: 'Dale & Teresa',
-                    parents: 'herman-sarah',
-                    generation: 2,
-                    line: 'herman',
-                    location: '',
-                    children: ['carlin-blake', 'jordan', 'sarah', 'allycia-ryan']
-                },
-                {
-                    id: 'chris-raquel',
-                    name: 'Chris & Raquel',
-                    parents: 'herman-sarah',
-                    generation: 2,
-                    line: 'herman',
-                    location: '',
-                    children: ['marcus-shay', 'michael-tasha']
-                },
-                {
-                    id: 'marilyn-craig',
-                    name: 'Marilyn & Craig King',
-                    parents: 'herman-sarah',
-                    generation: 2,
-                    line: 'herman',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'leon-marilyn',
-                    name: 'Leon / Marilyn',
-                    parents: 'herman-sarah',
-                    generation: 2,
-                    line: 'herman',
-                    location: '',
-                    children: ['aaron-alyssa']
-                },
-
-                // Pete & Rachel's children
-                {
-                    id: 'james-joyce',
-                    name: 'James & Joyce',
-                    parents: 'pete-rachel',
-                    generation: 2,
-                    line: 'pete',
-                    location: '',
-                    children: ['jason', 'jerold', 'paula-bryan']
-                },
-                {
-                    id: 'gaylend-marcia',
-                    name: 'Gaylend & Marcia',
-                    parents: 'pete-rachel',
-                    generation: 2,
-                    line: 'pete',
-                    location: '',
-                    children: ['ann', 'john-sarah']
-                },
-
-                // Ronald & Lorie's children
-                {
-                    id: 'adrian',
-                    name: 'Adrian',
-                    parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
-                    location: '',
-                    children: ['leighton', 'christian', 'drake']
-                },
-                {
-                    id: 'christopher-ronald',
-                    name: 'Christopher & Gena',
-                    parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
-                    location: '',
-                    children: ['kelly', 'felicity', 'griffin', 'abigail']
-                },
-                {
-                    id: 'chantel-jason',
-                    name: 'Chantel & Jason Casey',
-                    parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
-                    location: '',
-                    children: ['emilina']
-                },
-                {
-                    id: 'heather-chase',
-                    name: 'Heather & Chase Sandoz',
-                    parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'natalie-brandon',
-                    name: 'Natalie & Brandon Gunther',
-                    parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-
-                // Donald & Lisa's children
-                {
-                    id: 'douglas-mary',
-                    name: 'Douglas & Mary',
-                    parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
-                    location: '',
-                    children: ['peter-a']
-                },
-                {
-                    id: 'benjamin-mary',
-                    name: 'Benjamin & Mary',
-                    parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'elizabeth',
-                    name: 'Elizabeth',
-                    parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
-                    location: '',
-                    children: []
-                },
-
-                // Marion & Harold's children
-                {
-                    id: 'jerry-sharon',
-                    name: 'Jerry & Sharon',
+                    id: 'jerry',
+                    name: 'Jerry Doerksen & Sharon',
                     parents: 'marion-harold',
                     generation: 2,
                     line: 'doerksen',
                     location: '',
-                    children: ['chris-crystal']
+                    children: ['daen', 'shaedon', 'tyler', 'kelsey', 'brock'],
+                    notes: 'Sharon had previous marriage with Daen and Shaedon'
                 },
-
-                // Ruth & Curtis's children
                 {
-                    id: 'charlene-alan',
-                    name: 'Charlene & Alan Friesen',
-                    parents: 'ruth-curtis',
+                    id: 'christopher',
+                    name: 'Christopher Doerksen & Crystal Linscott',
+                    parents: 'marion-harold',
                     generation: 2,
-                    line: 'ruth',
+                    line: 'doerksen',
                     location: '',
-                    children: ['jaslyn-jacob', 'natalie-trey', 'emily-mitchell', 'madison']
+                    children: ['whitney', 'sterling', 'saylor', 'justice', 'quincy']
                 },
                 {
-                    id: 'jake',
-                    name: 'Jake',
-                    parents: 'ruth-curtis',
+                    id: 'autumn',
+                    name: 'Autumn Doerksen & Brandon Cooper',
+                    parents: 'marion-harold',
                     generation: 2,
-                    line: 'ruth',
-                    location: '',
-                    children: ['tyrone-evelyn', 'jarrod-mckayla']
-                },
-                {
-                    id: 'aiden-dorcas',
-                    name: 'Aiden & Dorcas',
-                    parents: 'ruth-curtis',
-                    generation: 2,
-                    line: 'ruth',
-                    location: '',
-                    children: ['jonathan', 'janell']
-                },
-
-                // Ivan & Ann's children
-                {
-                    id: 'mark-marlene',
-                    name: 'Mark & Marlene',
-                    parents: 'ivan-ann',
-                    generation: 2,
-                    line: 'ivan',
+                    line: 'doerksen',
                     location: '',
                     children: []
                 },
                 {
-                    id: 'michael-mateo',
-                    name: 'Michael & Mateo',
-                    parents: 'ivan-ann',
+                    id: 'jeremy',
+                    name: 'Jeremy Doerksen & Brenda',
+                    parents: 'marion-harold',
                     generation: 2,
-                    line: 'ivan',
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'wendell',
+                    name: 'Wendell Doerksen',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: [],
+                    notes: 'Died at age 1'
+                },
+                {
+                    id: 'gwendolyn',
+                    name: 'Gwendolyn Doerksen & Stan Ortman',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'wayne',
+                    name: 'Wayne Doerksen & Janette',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'twila',
+                    name: 'Twila Doerksen & Doug',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
                     location: '',
                     children: []
                 }
             ],
 
-            // Generation 3: Grandchildren
+            // Generation 3: Parents
             gen3: [
-                // Dale & Teresa's children
-                {
-                    id: 'carlin-blake',
-                    name: 'Carlin & Blake',
-                    parents: 'dale-teresa',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: ['jonathan-dale']
-                },
-                {
-                    id: 'jordan',
-                    name: 'Jordan',
-                    parents: 'dale-teresa',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'sarah',
-                    name: 'Sarah',
-                    parents: 'dale-teresa',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'allycia-ryan',
-                    name: 'Allycia & Ryan Samuel, Sarah',
-                    parents: 'dale-teresa',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: []
-                },
-
-                // Chris & Raquel's children
-                {
-                    id: 'marcus-shay',
-                    name: 'Marcus & Shay',
-                    parents: 'chris-raquel',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: ['mary-hays']
-                },
-                {
-                    id: 'michael-tasha',
-                    name: 'Michael & Tasha',
-                    parents: 'chris-raquel',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: ['reese-landry']
-                },
-
-                // Leon / Marilyn's children
-                {
-                    id: 'aaron-alyssa',
-                    name: 'Aaron & Alyssa',
-                    parents: 'leon-marilyn',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: ['christopher-edward', 'micah', 'anna', 'caeden']
-                },
-
-                // James & Joyce's children
-                {
-                    id: 'jason',
-                    name: 'Jason',
-                    parents: 'james-joyce',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: ['nathanial', 'natalie', 'nolan', 'noelle', 'nathan']
-                },
-                {
-                    id: 'jerold',
-                    name: 'Jerold',
-                    parents: 'james-joyce',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: ['shane', 'joel', 'susanna', 'josiah', 'jonah', 'sophia', 'serena']
-                },
-                {
-                    id: 'paula-bryan',
-                    name: 'Paula & Bryan Holtz',
-                    parents: 'james-joyce',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: ['beckett', 'piper', 'scarlett', 'radlynn']
-                },
-
-                // Gaylend & Marcia's children
-                {
-                    id: 'ann',
-                    name: 'Ann',
-                    parents: 'gaylend-marcia',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'john-sarah',
-                    name: 'John & Sarah',
-                    parents: 'gaylend-marcia',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-
-                // Adrian's children
-                {
-                    id: 'leighton',
-                    name: 'Leighton',
-                    parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'christian',
-                    name: 'Christian',
-                    parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'drake',
-                    name: 'Drake',
-                    parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-
-                // Christopher & Gena's children
-                {
-                    id: 'kelly',
-                    name: 'Kelly',
-                    parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'felicity',
-                    name: 'Felicity',
-                    parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'griffin',
-                    name: 'Griffin',
-                    parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'abigail',
-                    name: 'Abigail',
-                    parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-
-                // Chantel & Jason's children
-                {
-                    id: 'emilina',
-                    name: 'Emilina',
-                    parents: 'chantel-jason',
-                    generation: 3,
-                    line: 'ronald',
-                    location: '',
-                    children: []
-                },
-
-                // Douglas & Mary's children
-                {
-                    id: 'peter-a',
-                    name: 'Peter A. Regier',
-                    parents: 'douglas-mary',
-                    generation: 3,
-                    line: 'donald',
-                    location: '',
-                    children: []
-                },
-
                 // Jerry & Sharon's children
                 {
-                    id: 'chris-crystal',
-                    name: 'Chris & Crystal',
-                    parents: 'jerry-sharon',
+                    id: 'daen',
+                    name: 'Daen Glover & Jennifer',
+                    parents: 'jerry',
                     generation: 3,
                     line: 'doerksen',
                     location: '',
-                    children: ['whitney-aaron', 'sterling-kyla', 'saylor-bobbie', 'justice', 'quincy']
+                    children: [],
+                    notes: "Sharon's child from previous marriage"
                 },
-
-                // Charlene & Alan's children
                 {
-                    id: 'jaslyn-jacob',
-                    name: 'Jaslyn & Jacob',
-                    parents: 'charlene-alan',
+                    id: 'shaedon',
+                    name: 'Shaedon Glover & Michaja',
+                    parents: 'jerry',
                     generation: 3,
-                    line: 'ruth',
+                    line: 'doerksen',
                     location: '',
-                    children: ['rick', 'reese', 'benjamin']
+                    children: [],
+                    notes: "Sharon's child from previous marriage"
                 },
                 {
-                    id: 'natalie-trey',
-                    name: 'Natalie & Trey',
-                    parents: 'charlene-alan',
+                    id: 'tyler',
+                    name: 'Tyler Doerksen',
+                    parents: 'jerry',
                     generation: 3,
-                    line: 'ruth',
-                    location: '',
-                    children: ['hannah', 'josiah', 'naomi', 'daniel', 'esau']
-                },
-                {
-                    id: 'emily-mitchell',
-                    name: 'Emily & Mitchell',
-                    parents: 'charlene-alan',
-                    generation: 3,
-                    line: 'ruth',
-                    location: '',
-                    children: ['cooper', 'lydia', 'etta', 'sarah', 'silas']
-                },
-                {
-                    id: 'madison',
-                    name: 'Madison',
-                    parents: 'charlene-alan',
-                    generation: 3,
-                    line: 'ruth',
-                    location: '',
-                    children: ['caleb', 'eleanor', 'nora', 'ara']
-                },
-
-                // Jake's children
-                {
-                    id: 'tyrone-evelyn',
-                    name: 'Tyrone & Evelyn',
-                    parents: 'jake',
-                    generation: 3,
-                    line: 'ruth',
-                    location: '',
-                    children: ['derrick', 'jessica', 'joshua', 'henry', 'delia']
-                },
-                {
-                    id: 'jarrod-mckayla',
-                    name: 'Jarrod & McKayla',
-                    parents: 'jake',
-                    generation: 3,
-                    line: 'ruth',
-                    location: '',
-                    children: ['cason', 'connor', 'charlotte']
-                },
-
-                // Aiden & Dorcas's children
-                {
-                    id: 'jonathan',
-                    name: 'Jonathan',
-                    parents: 'aiden-dorcas',
-                    generation: 3,
-                    line: 'ruth',
+                    line: 'doerksen',
                     location: '',
                     children: []
                 },
                 {
-                    id: 'janell',
-                    name: 'Janell',
-                    parents: 'aiden-dorcas',
+                    id: 'kelsey',
+                    name: 'Kelsey Doerksen',
+                    parents: 'jerry',
                     generation: 3,
-                    line: 'ruth',
+                    line: 'doerksen',
                     location: '',
                     children: []
-                }
-            ],
-
-            // Generation 4: Great-Grandchildren
-            gen4: [
-                // Carlin & Blake's children
-                {
-                    id: 'jonathan-dale',
-                    name: 'Jonathan',
-                    parents: 'carlin-blake',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-
-                // Marcus & Shay's children
-                {
-                    id: 'mary-hays',
-                    name: 'Mary, Hays',
-                    parents: 'marcus-shay',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-
-                // Michael & Tasha's children
-                {
-                    id: 'reese-landry',
-                    name: 'Reese, Landry',
-                    parents: 'michael-tasha',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-
-                // Aaron & Alyssa's children
-                {
-                    id: 'christopher-edward',
-                    name: 'Christopher, Edward',
-                    parents: 'aaron-alyssa',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
                 },
                 {
-                    id: 'micah',
-                    name: 'Micah',
-                    parents: 'aaron-alyssa',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-                {
-                    id: 'anna',
-                    name: 'Anna',
-                    parents: 'aaron-alyssa',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-                {
-                    id: 'caeden',
-                    name: 'Caeden',
-                    parents: 'aaron-alyssa',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-
-                // Jason's children
-                {
-                    id: 'nathanial',
-                    name: 'Nathanial',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'natalie',
-                    name: 'Natalie',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'nolan',
-                    name: 'Nolan',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'noelle',
-                    name: 'Noelle',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'nathan',
-                    name: 'Nathan',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-
-                // Jerold's children
-                {
-                    id: 'shane',
-                    name: 'Shane',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'joel',
-                    name: 'Joel',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'susanna',
-                    name: 'Susanna',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'josiah',
-                    name: 'Josiah',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'jonah',
-                    name: 'Jonah',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'sophia',
-                    name: 'Sophia',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'serena',
-                    name: 'Serena',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-
-                // Paula & Bryan's children
-                {
-                    id: 'beckett',
-                    name: 'Beckett',
-                    parents: 'paula-bryan',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'piper',
-                    name: 'Piper',
-                    parents: 'paula-bryan',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'scarlett',
-                    name: 'Scarlett',
-                    parents: 'paula-bryan',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'radlynn',
-                    name: 'Radlynn',
-                    parents: 'paula-bryan',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
-
-                // Chris & Crystal's children (moved from gen3)
-                {
-                    id: 'whitney-aaron',
-                    name: 'Whitney & Aaron',
-                    parents: 'chris-crystal',
-                    generation: 4,
+                    id: 'brock',
+                    name: 'Brock Doerksen',
+                    parents: 'jerry',
+                    generation: 3,
                     line: 'doerksen',
                     location: '',
-                    children: ['haisley', 'nella', 'cash', 'henry']
+                    children: []
                 },
+
+                // Christopher & Crystal's children
                 {
-                    id: 'sterling-kyla',
-                    name: 'Sterling & Kyla',
-                    parents: 'chris-crystal',
-                    generation: 4,
+                    id: 'whitney',
+                    name: 'Whitney Doerksen & Aaron',
+                    parents: 'christopher',
+                    generation: 3,
                     line: 'doerksen',
                     location: '',
-                    children: ['finley', 'ava', 'noah']
+                    children: ['haisley', 'nella', 'cash', 'henry-aaron']
                 },
                 {
-                    id: 'saylor-bobbie',
-                    name: 'Saylor & Bobbie',
-                    parents: 'chris-crystal',
-                    generation: 4,
+                    id: 'sterling',
+                    name: 'Sterling Doerksen & Kyla',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['finley', 'ava']
+                },
+                {
+                    id: 'saylor',
+                    name: 'Saylor Doerksen & Bobbie',
+                    parents: 'christopher',
+                    generation: 3,
                     line: 'doerksen',
                     location: '',
                     children: ['waylon']
                 },
                 {
                     id: 'justice',
-                    name: 'Justice',
-                    parents: 'chris-crystal',
-                    generation: 4,
+                    name: 'Justice Doerksen',
+                    parents: 'christopher',
+                    generation: 3,
                     line: 'doerksen',
                     location: '',
                     children: []
                 },
                 {
                     id: 'quincy',
-                    name: 'Quincy',
-                    parents: 'chris-crystal',
-                    generation: 4,
+                    name: 'Quincy Doerksen',
+                    parents: 'christopher',
+                    generation: 3,
                     line: 'doerksen',
                     location: '',
                     children: []
-                },
-
-                // Jaslyn & Jacob's children
-                {
-                    id: 'rick',
-                    name: 'Rick',
-                    parents: 'jaslyn-jacob',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'reese',
-                    name: 'Reese',
-                    parents: 'jaslyn-jacob',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'benjamin',
-                    name: 'Benjamin',
-                    parents: 'jaslyn-jacob',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-
-                // Natalie & Trey's children
-                {
-                    id: 'hannah',
-                    name: 'Hannah',
-                    parents: 'natalie-trey',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'josiah-ruth',
-                    name: 'Josiah',
-                    parents: 'natalie-trey',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'naomi',
-                    name: 'Naomi',
-                    parents: 'natalie-trey',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'daniel',
-                    name: 'Daniel',
-                    parents: 'natalie-trey',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'esau',
-                    name: 'Esau',
-                    parents: 'natalie-trey',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-
-                // Emily & Mitchell's children
-                {
-                    id: 'cooper',
-                    name: 'Cooper',
-                    parents: 'emily-mitchell',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'lydia',
-                    name: 'Lydia',
-                    parents: 'emily-mitchell',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'etta',
-                    name: 'Etta',
-                    parents: 'emily-mitchell',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'sarah-emily',
-                    name: 'Sarah',
-                    parents: 'emily-mitchell',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'silas',
-                    name: 'Silas',
-                    parents: 'emily-mitchell',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-
-                // Madison's children
-                {
-                    id: 'caleb',
-                    name: 'Caleb',
-                    parents: 'madison',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'eleanor',
-                    name: 'Eleanor',
-                    parents: 'madison',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'nora',
-                    name: 'Nora',
-                    parents: 'madison',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'ara',
-                    name: 'Ara',
-                    parents: 'madison',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-
-                // Tyrone & Evelyn's children
-                {
-                    id: 'derrick',
-                    name: 'Derrick',
-                    parents: 'tyrone-evelyn',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'jessica',
-                    name: 'Jessica',
-                    parents: 'tyrone-evelyn',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'joshua',
-                    name: 'Joshua',
-                    parents: 'tyrone-evelyn',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'henry-tyrone',
-                    name: 'Henry',
-                    parents: 'tyrone-evelyn',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'delia',
-                    name: 'Delia',
-                    parents: 'tyrone-evelyn',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-
-                // Jarrod & McKayla's children
-                {
-                    id: 'cason',
-                    name: 'Cason',
-                    parents: 'jarrod-mckayla',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'connor',
-                    name: 'Connor',
-                    parents: 'jarrod-mckayla',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
-                },
-                {
-                    id: 'charlotte',
-                    name: 'Charlotte',
-                    parents: 'jarrod-mckayla',
-                    generation: 4,
-                    line: 'ruth',
-                    location: ''
                 }
             ],
 
-            // Generation 5: Great-Great-Grandchildren
-            gen5: [
+            // Generation 4: Children
+            gen4: [
                 // Whitney & Aaron's children
                 {
                     id: 'haisley',
                     name: 'Haisley',
-                    parents: 'whitney-aaron',
-                    generation: 5,
+                    parents: 'whitney',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
                 {
                     id: 'nella',
                     name: 'Nella',
-                    parents: 'whitney-aaron',
-                    generation: 5,
+                    parents: 'whitney',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
                 {
                     id: 'cash',
                     name: 'Cash',
-                    parents: 'whitney-aaron',
-                    generation: 5,
+                    parents: 'whitney',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
                 {
-                    id: 'henry',
+                    id: 'henry-aaron',
                     name: 'Henry',
-                    parents: 'whitney-aaron',
-                    generation: 5,
+                    parents: 'whitney',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
@@ -1608,24 +818,16 @@
                 {
                     id: 'finley',
                     name: 'Finley',
-                    parents: 'sterling-kyla',
-                    generation: 5,
+                    parents: 'sterling',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
                 {
                     id: 'ava',
                     name: 'Ava',
-                    parents: 'sterling-kyla',
-                    generation: 5,
-                    line: 'doerksen',
-                    location: ''
-                },
-                {
-                    id: 'noah',
-                    name: 'Noah',
-                    parents: 'sterling-kyla',
-                    generation: 5,
+                    parents: 'sterling',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 },
@@ -1634,8 +836,8 @@
                 {
                     id: 'waylon',
                     name: 'Waylon',
-                    parents: 'saylor-bobbie',
-                    generation: 5,
+                    parents: 'saylor',
+                    generation: 4,
                     line: 'doerksen',
                     location: ''
                 }
@@ -1644,7 +846,7 @@
 
         // Helper function to get all family members as flat array
         function getAllMembers() {
-            return [...familyData.gen1, ...familyData.gen2, ...familyData.gen3, ...familyData.gen4, ...familyData.gen5];
+            return [...familyData.gen1, ...familyData.gen2, ...familyData.gen3, ...familyData.gen4];
         }
 
         // Helper function to find person by ID
@@ -1839,12 +1041,9 @@
                 gen2: all.filter(p => p.generation === 2).length,
                 gen3: all.filter(p => p.generation === 3).length,
                 gen4: all.filter(p => p.generation === 4).length,
-                gen5: all.filter(p => p.generation === 5).length,
+                doerksenLine: all.filter(p => p.line === 'doerksen').length,
                 hermanLine: all.filter(p => p.line === 'herman').length,
                 peteLine: all.filter(p => p.line === 'pete').length,
-                ronaldLine: all.filter(p => p.line === 'ronald').length,
-                donaldLine: all.filter(p => p.line === 'donald').length,
-                doerksenLine: all.filter(p => p.line === 'doerksen').length,
                 ruthLine: all.filter(p => p.line === 'ruth').length,
                 ivanLine: all.filter(p => p.line === 'ivan').length
             };
@@ -1857,47 +1056,19 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.gen2}</div>
-                    <div class="stat-label">Generation 2</div>
+                    <div class="stat-label">Grandparents (Gen 2)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.gen3}</div>
-                    <div class="stat-label">Generation 3</div>
+                    <div class="stat-label">Parents (Gen 3)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.gen4}</div>
-                    <div class="stat-label">Generation 4</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.gen5}</div>
-                    <div class="stat-label">Generation 5</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.hermanLine}</div>
-                    <div class="stat-label">Herman & Sarah Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.peteLine}</div>
-                    <div class="stat-label">Pete & Rachel Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.ronaldLine}</div>
-                    <div class="stat-label">Ronald & Lorie Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.donaldLine}</div>
-                    <div class="stat-label">Donald & Lisa Line</div>
+                    <div class="stat-label">Children (Gen 4)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.doerksenLine}</div>
-                    <div class="stat-label">Marion & Harold Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.ruthLine}</div>
-                    <div class="stat-label">Ruth & Curtis Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.ivanLine}</div>
-                    <div class="stat-label">Ivan & Ann Line</div>
+                    <div class="stat-label">Doerksen Line</div>
                 </div>
             `;
         }
