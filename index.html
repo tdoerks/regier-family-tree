@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Regier Family Tree - Interactive Reunion Tool</title>
+    <meta name="description" content="Interactive family tree for the Regier family spanning 4 generations">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --herman: #2196F3;
+            --pete: #4CAF50;
+            --doerksen: #FF8C42;
+            --ruth: #9C27B0;
+            --ivan: #00BCD4;
+            --ronald: #FFC107;
+            --donald: #F44336;
+            --bg-light: #f5f5f5;
+            --bg-white: #ffffff;
+            --text-dark: #333;
+            --text-light: #666;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--doerksen) 0%, var(--herman) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .password-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--doerksen) 0%, var(--herman) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .password-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .password-card h2 {
+            color: var(--doerksen);
+            margin-bottom: 20px;
+        }
+
+        .password-card input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .password-card button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background: var(--doerksen);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .password-card button:hover {
+            background: #e67a32;
+        }
+
+        .password-error {
+            color: var(--donald);
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-button:hover {
+            border-color: var(--doerksen);
+            color: var(--doerksen);
+        }
+
+        .tab-button.active {
+            background: var(--doerksen);
+            color: white;
+            border-color: var(--doerksen);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .family-tree {
+            padding: 20px 0;
+        }
+
+        .family-line {
+            margin-bottom: 30px;
+            border-left: 4px solid var(--doerksen);
+            padding-left: 20px;
+        }
+
+        .family-line.herman { border-color: var(--herman); }
+        .family-line.pete { border-color: var(--pete); }
+        .family-line.doerksen { border-color: var(--doerksen); }
+        .family-line.ruth { border-color: var(--ruth); }
+        .family-line.ivan { border-color: var(--ivan); }
+        .family-line.ronald { border-color: var(--ronald); }
+        .family-line.donald { border-color: var(--donald); }
+
+        .person {
+            margin: 10px 0;
+            padding: 15px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+        }
+
+        .person.expandable {
+            cursor: pointer;
+            border-left-color: var(--doerksen);
+        }
+
+        .person.expandable:hover {
+            background: #ffe8d6;
+        }
+
+        .person-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .person-details {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        .person-details span {
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .children {
+            margin-left: 30px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .children.expanded {
+            display: block;
+        }
+
+        .expand-icon {
+            margin-right: 8px;
+            font-weight: bold;
+            color: var(--doerksen);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--doerksen) 0%, var(--herman) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .tab-button {
+                white-space: nowrap;
+            }
+
+            .children {
+                margin-left: 15px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            .tabs, .search-bar, .filters {
+                display: none;
+            }
+
+            .children {
+                display: block !important;
+            }
+
+            .password-gate {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Gate -->
+    <div class="password-gate" id="passwordGate">
+        <div class="password-card">
+            <h2>🌳 Regier Family Tree</h2>
+            <p>This site is for Regier family members only.</p>
+            <input type="password" id="passwordInput" placeholder="Enter family password" autocomplete="off">
+            <button onclick="checkPassword()">🔓 Enter</button>
+            <p class="password-error" id="passwordError"></p>
+            <p style="margin-top: 20px; font-size: 14px; color: #666;">
+                Don't have the password?<br>Contact Tyler Doerksen
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent" style="display: none;">
+        <header>
+            <h1>🌳 Regier Family Tree</h1>
+            <p>Interactive Reunion Tool - Four Generations of Family</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('tree')">🌳 Family Tree</button>
+            <button class="tab-button" onclick="showTab('stats')">📊 Statistics</button>
+            <button class="tab-button" onclick="showTab('bingo')">🎮 Family Bingo</button>
+            <button class="tab-button" onclick="showTab('passport')">📖 Reunion Passport</button>
+            <button class="tab-button" onclick="showTab('quiz')">❓ Relationship Quiz</button>
+            <button class="tab-button" onclick="showTab('whoswho')">📋 Who's Who</button>
+        </div>
+
+        <!-- Family Tree Tab -->
+        <div class="tab-content active" id="treeTab">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search family by name..." oninput="searchFamily()">
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Family Line</label>
+                    <select id="lineFilter" onchange="filterFamily()">
+                        <option value="all">All Families</option>
+                        <option value="doerksen">Doerksen Line (Marion)</option>
+                        <option value="herman">Herman & Sarah</option>
+                        <option value="pete">Pete & Rachel</option>
+                        <option value="ruth">Ruth & Curtis</option>
+                        <option value="ivan">Ivan & Ann</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select id="locationFilter" onchange="filterFamily()">
+                        <option value="all">All Locations</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Generation</label>
+                    <select id="genFilter" onchange="filterFamily()">
+                        <option value="all">All Generations</option>
+                        <option value="1">Gen 1 (Great-Grandparents)</option>
+                        <option value="2">Gen 2 (Grandparents)</option>
+                        <option value="3">Gen 3 (Parents)</option>
+                        <option value="4">Gen 4 (Children)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--doerksen)"></div>
+                    <span>Doerksen Line</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--herman)"></div>
+                    <span>Herman & Sarah</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--pete)"></div>
+                    <span>Pete & Rachel</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--ruth)"></div>
+                    <span>Ruth & Curtis</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--ivan)"></div>
+                    <span>Ivan & Ann</span>
+                </div>
+            </div>
+
+            <div id="familyTreeContainer" class="family-tree">
+                <!-- Family tree will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div class="tab-content" id="statsTab">
+            <h2>📊 Family Statistics</h2>
+            <div class="stats-grid" id="statsContainer">
+                <!-- Statistics will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Bingo Tab -->
+        <div class="tab-content" id="bingoTab">
+            <h2>🎮 Family Bingo</h2>
+            <p style="margin-bottom: 20px;">Complete these challenges at the reunion! Click to mark as completed.</p>
+            <div id="bingoContainer">
+                <!-- Bingo card will be generated here -->
+            </div>
+        </div>
+
+        <!-- Passport Tab -->
+        <div class="tab-content" id="passportTab">
+            <h2>📖 Reunion Passport</h2>
+            <p style="margin-bottom: 20px;">Meet members from each family line to collect stamps!</p>
+            <div id="passportContainer">
+                <!-- Passport will be generated here -->
+            </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="quizTab">
+            <h2>❓ Relationship Detective Quiz</h2>
+            <p style="margin-bottom: 20px;">Test your knowledge of the family tree!</p>
+            <div id="quizContainer">
+                <!-- Quiz will be generated here -->
+            </div>
+        </div>
+
+        <!-- Who's Who Tab -->
+        <div class="tab-content" id="whoswhoTab">
+            <h2>📋 Who's Who - Complete Family List</h2>
+            <div id="whosWhoContainer">
+                <!-- Table will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const correct = 'regier1924';
+
+            if (input.toLowerCase() === correct) {
+                localStorage.setItem('familyPassword', correct);
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initializeApp();
+            } else {
+                document.getElementById('passwordError').textContent = '❌ Incorrect password. Please try again.';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Check password on load
+        window.addEventListener('load', function() {
+            const stored = localStorage.getItem('familyPassword');
+            if (stored === 'regier1924') {
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initializeApp();
+            }
+        });
+
+        // Tab navigation
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Complete Regier Family Data Structure
+        const familyData = {
+            // Generation 1: Great-Grandparents
+            gen1: [
+                {
+                    id: 'marion-harold',
+                    name: 'Marion Regier & Harold Doerksen Brundage',
+                    generation: 1,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['jerry', 'christopher', 'autumn', 'jeremy', 'wendell', 'gwendolyn', 'wayne', 'twila']
+                }
+            ],
+
+            // Generation 2: Grandparents
+            gen2: [
+                {
+                    id: 'jerry',
+                    name: 'Jerry Doerksen & Sharon',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['daen', 'shaedon', 'tyler', 'kelsey', 'brock'],
+                    notes: 'Sharon had previous marriage with Daen and Shaedon'
+                },
+                {
+                    id: 'christopher',
+                    name: 'Christopher Doerksen & Crystal Linscott',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['whitney', 'sterling', 'saylor', 'justice', 'quincy']
+                },
+                {
+                    id: 'autumn',
+                    name: 'Autumn Doerksen & Brandon Cooper',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'jeremy',
+                    name: 'Jeremy Doerksen & Brenda',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'wendell',
+                    name: 'Wendell Doerksen',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: [],
+                    notes: 'Died at age 1'
+                },
+                {
+                    id: 'gwendolyn',
+                    name: 'Gwendolyn Doerksen & Stan Ortman',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'wayne',
+                    name: 'Wayne Doerksen & Janette',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'twila',
+                    name: 'Twila Doerksen & Doug',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                }
+            ],
+
+            // Generation 3: Parents
+            gen3: [
+                // Jerry & Sharon's children
+                {
+                    id: 'daen',
+                    name: 'Daen Glover & Jennifer',
+                    parents: 'jerry',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: [],
+                    notes: "Sharon's child from previous marriage"
+                },
+                {
+                    id: 'shaedon',
+                    name: 'Shaedon Glover & Michaja',
+                    parents: 'jerry',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: [],
+                    notes: "Sharon's child from previous marriage"
+                },
+                {
+                    id: 'tyler',
+                    name: 'Tyler Doerksen',
+                    parents: 'jerry',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'kelsey',
+                    name: 'Kelsey Doerksen',
+                    parents: 'jerry',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'brock',
+                    name: 'Brock Doerksen',
+                    parents: 'jerry',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Christopher & Crystal's children
+                {
+                    id: 'whitney',
+                    name: 'Whitney Doerksen & Aaron',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['haisley', 'nella', 'cash', 'henry-aaron']
+                },
+                {
+                    id: 'sterling',
+                    name: 'Sterling Doerksen & Kyla',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['finley', 'ava']
+                },
+                {
+                    id: 'saylor',
+                    name: 'Saylor Doerksen & Bobbie',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['waylon']
+                },
+                {
+                    id: 'justice',
+                    name: 'Justice Doerksen',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'quincy',
+                    name: 'Quincy Doerksen',
+                    parents: 'christopher',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                }
+            ],
+
+            // Generation 4: Children
+            gen4: [
+                // Whitney & Aaron's children
+                {
+                    id: 'haisley',
+                    name: 'Haisley',
+                    parents: 'whitney',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+                {
+                    id: 'nella',
+                    name: 'Nella',
+                    parents: 'whitney',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+                {
+                    id: 'cash',
+                    name: 'Cash',
+                    parents: 'whitney',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+                {
+                    id: 'henry-aaron',
+                    name: 'Henry',
+                    parents: 'whitney',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+
+                // Sterling & Kyla's children
+                {
+                    id: 'finley',
+                    name: 'Finley',
+                    parents: 'sterling',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+                {
+                    id: 'ava',
+                    name: 'Ava',
+                    parents: 'sterling',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                },
+
+                // Saylor & Bobbie's children
+                {
+                    id: 'waylon',
+                    name: 'Waylon',
+                    parents: 'saylor',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: ''
+                }
+            ]
+        };
+
+        // Helper function to get all family members as flat array
+        function getAllMembers() {
+            return [...familyData.gen1, ...familyData.gen2, ...familyData.gen3, ...familyData.gen4];
+        }
+
+        // Helper function to find person by ID
+        function findPerson(id) {
+            return getAllMembers().find(p => p.id === id);
+        }
+
+        // Helper function to get children of a person
+        function getChildren(personId) {
+            const person = findPerson(personId);
+            if (!person || !person.children || person.children.length === 0) return [];
+            return person.children.map(childId => findPerson(childId)).filter(c => c);
+        }
+
+        // Render family tree
+        function renderFamilyTree(members = getAllMembers()) {
+            const container = document.getElementById('familyTreeContainer');
+            container.innerHTML = '';
+
+            // Start with generation 1 (roots)
+            const roots = members.filter(p => p.generation === 1);
+
+            roots.forEach(root => {
+                const familyLine = document.createElement('div');
+                familyLine.className = `family-line ${root.line}`;
+                familyLine.appendChild(renderPerson(root, members));
+                container.appendChild(familyLine);
+            });
+        }
+
+        // Render individual person card
+        function renderPerson(person, visibleMembers) {
+            const personDiv = document.createElement('div');
+            const children = getChildren(person.id).filter(c => visibleMembers.includes(c));
+            const hasChildren = children.length > 0;
+
+            personDiv.className = `person ${hasChildren ? 'expandable' : ''}`;
+            if (hasChildren) {
+                personDiv.onclick = () => toggleChildren(person.id);
+            }
+
+            let html = '<div class="person-name">';
+            if (hasChildren) {
+                html += `<span class="expand-icon" id="icon-${person.id}">▶</span>`;
+            }
+            html += person.name;
+            html += '</div>';
+
+            html += '<div class="person-details">';
+            if (person.location) {
+                html += `<span>📍 ${person.location}</span>`;
+            }
+            html += `<span>Gen ${person.generation}</span>`;
+            if (person.notes) {
+                html += `<span>ℹ️ ${person.notes}</span>`;
+            }
+            html += '</div>';
+
+            personDiv.innerHTML = html;
+
+            // Add children container
+            if (hasChildren) {
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = 'children';
+                childrenDiv.id = `children-${person.id}`;
+
+                children.forEach(child => {
+                    childrenDiv.appendChild(renderPerson(child, visibleMembers));
+                });
+
+                personDiv.appendChild(childrenDiv);
+            }
+
+            return personDiv;
+        }
+
+        // Toggle children visibility
+        function toggleChildren(personId) {
+            const childrenDiv = document.getElementById(`children-${personId}`);
+            const icon = document.getElementById(`icon-${personId}`);
+
+            if (childrenDiv) {
+                childrenDiv.classList.toggle('expanded');
+                if (icon) {
+                    icon.textContent = childrenDiv.classList.contains('expanded') ? '▼' : '▶';
+                }
+            }
+        }
+
+        // Search functionality
+        function searchFamily() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allMembers = getAllMembers();
+
+            if (!searchTerm) {
+                renderFamilyTree(allMembers);
+                return;
+            }
+
+            const matches = allMembers.filter(person =>
+                person.name.toLowerCase().includes(searchTerm) ||
+                (person.location && person.location.toLowerCase().includes(searchTerm))
+            );
+
+            // Include ancestors and descendants of matches
+            const expanded = new Set(matches);
+            matches.forEach(person => {
+                // Add ancestors
+                let current = person;
+                while (current.parents) {
+                    const parent = findPerson(current.parents);
+                    if (parent) {
+                        expanded.add(parent);
+                        current = parent;
+                    } else break;
+                }
+
+                // Add descendants
+                addDescendants(person.id, expanded);
+            });
+
+            renderFamilyTree([...expanded]);
+        }
+
+        // Helper to add all descendants
+        function addDescendants(personId, set) {
+            const children = getChildren(personId);
+            children.forEach(child => {
+                set.add(child);
+                addDescendants(child.id, set);
+            });
+        }
+
+        // Filter functionality
+        function filterFamily() {
+            const lineFilter = document.getElementById('lineFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+            const genFilter = document.getElementById('genFilter').value;
+
+            let filtered = getAllMembers();
+
+            if (lineFilter !== 'all') {
+                filtered = filtered.filter(p => p.line === lineFilter);
+            }
+
+            if (locationFilter !== 'all') {
+                filtered = filtered.filter(p => p.location === locationFilter);
+            }
+
+            if (genFilter !== 'all') {
+                filtered = filtered.filter(p => p.generation === parseInt(genFilter));
+            }
+
+            // Include ancestors of filtered results
+            const expanded = new Set(filtered);
+            filtered.forEach(person => {
+                let current = person;
+                while (current.parents) {
+                    const parent = findPerson(current.parents);
+                    if (parent) {
+                        expanded.add(parent);
+                        current = parent;
+                    } else break;
+                }
+            });
+
+            renderFamilyTree([...expanded]);
+        }
+
+        // Populate location filter
+        function populateLocationFilter() {
+            const locations = new Set();
+            getAllMembers().forEach(person => {
+                if (person.location) locations.add(person.location);
+            });
+
+            const select = document.getElementById('locationFilter');
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location;
+                option.textContent = location;
+                select.appendChild(option);
+            });
+        }
+
+        // Calculate statistics
+        function calculateStats() {
+            const all = getAllMembers();
+            const stats = {
+                total: all.length,
+                gen1: all.filter(p => p.generation === 1).length,
+                gen2: all.filter(p => p.generation === 2).length,
+                gen3: all.filter(p => p.generation === 3).length,
+                gen4: all.filter(p => p.generation === 4).length,
+                doerksenLine: all.filter(p => p.line === 'doerksen').length,
+                hermanLine: all.filter(p => p.line === 'herman').length,
+                peteLine: all.filter(p => p.line === 'pete').length,
+                ruthLine: all.filter(p => p.line === 'ruth').length,
+                ivanLine: all.filter(p => p.line === 'ivan').length
+            };
+
+            const container = document.getElementById('statsContainer');
+            container.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total}</div>
+                    <div class="stat-label">Total Family Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.gen2}</div>
+                    <div class="stat-label">Grandparents (Gen 2)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.gen3}</div>
+                    <div class="stat-label">Parents (Gen 3)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.gen4}</div>
+                    <div class="stat-label">Children (Gen 4)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.doerksenLine}</div>
+                    <div class="stat-label">Doerksen Line</div>
+                </div>
+            `;
+        }
+
+        // Generate Who's Who table
+        function generateWhosWho() {
+            const all = getAllMembers();
+            const container = document.getElementById('whosWhoContainer');
+
+            let html = `
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--doerksen); color: white;">
+                            <th style="padding: 12px; text-align: left;">Name</th>
+                            <th style="padding: 12px; text-align: left;">Generation</th>
+                            <th style="padding: 12px; text-align: left;">Family Line</th>
+                            <th style="padding: 12px; text-align: left;">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            all.sort((a, b) => {
+                if (a.generation !== b.generation) return a.generation - b.generation;
+                return a.name.localeCompare(b.name);
+            }).forEach((person, idx) => {
+                const bgColor = idx % 2 === 0 ? 'var(--bg-light)' : 'white';
+                html += `
+                    <tr style="background: ${bgColor};">
+                        <td style="padding: 12px; border-bottom: 1px solid var(--border);">${person.name}</td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--border);">Generation ${person.generation}</td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--border);">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: var(--${person.line}); margin-right: 8px;"></span>
+                            ${person.line.charAt(0).toUpperCase() + person.line.slice(1)}
+                        </td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--border);">${person.location || '-'}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Generate Family Bingo
+        function generateBingo() {
+            const bingoPrompts = [
+                "Find someone born in the same state as you",
+                "Meet someone who shares your first initial",
+                "Find a cousin you've never met before",
+                "Talk to someone from Generation 1 or 2",
+                "Meet all of Jerry & Sharon's kids",
+                "Find someone who lives in a different state",
+                "Meet someone from Christopher & Crystal's family",
+                "Talk to someone named after a family member",
+                "Find someone who's been to a previous reunion",
+                "Meet someone from the Glover family line",
+                "Find someone with the same number of siblings",
+                "Talk to the youngest person at the reunion",
+                "Meet someone from Whitney & Aaron's family",
+                "Find someone who knows Marion & Harold's story",
+                "Talk to someone from Sterling & Kyla's family",
+                "Meet someone you only knew from photos",
+                "Find a great-grandchild (Gen 4)",
+                "Talk to someone about family history",
+                "Meet someone from Saylor & Bobbie's family",
+                "Find someone who can name all 8 Gen 2 families",
+                "Meet someone from Autumn & Brandon's family",
+                "Talk to someone about their favorite family memory",
+                "Find someone who knows a family recipe",
+                "Meet all the children of one Gen 2 couple"
+            ];
+
+            // Shuffle and pick 9 for 3x3 bingo
+            const shuffled = bingoPrompts.sort(() => Math.random() - 0.5);
+            const selected = shuffled.slice(0, 9);
+
+            const container = document.getElementById('bingoContainer');
+            let html = '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 600px; margin: 0 auto;">';
+
+            selected.forEach((prompt, idx) => {
+                const saved = localStorage.getItem(`bingo-${idx}`) === 'true';
+                html += `
+                    <div id="bingo-${idx}" onclick="toggleBingo(${idx})" style="
+                        padding: 20px;
+                        background: ${saved ? 'var(--doerksen)' : 'white'};
+                        color: ${saved ? 'white' : 'var(--text-dark)'};
+                        border: 2px solid var(--doerksen);
+                        border-radius: 8px;
+                        cursor: pointer;
+                        text-align: center;
+                        min-height: 100px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s;
+                        font-size: 14px;
+                    ">
+                        ${saved ? '✓ ' : ''}${prompt}
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += `
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="resetBingo()" style="padding: 10px 20px; background: var(--donald); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Reset Bingo Card
+                    </button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function toggleBingo(idx) {
+            const current = localStorage.getItem(`bingo-${idx}`) === 'true';
+            localStorage.setItem(`bingo-${idx}`, (!current).toString());
+            generateBingo();
+        }
+
+        function resetBingo() {
+            for (let i = 0; i < 9; i++) {
+                localStorage.removeItem(`bingo-${i}`);
+            }
+            generateBingo();
+        }
+
+        // Generate Reunion Passport
+        function generatePassport() {
+            const familyLines = [
+                { id: 'marion-harold', name: 'Marion & Harold', color: 'doerksen' },
+                { id: 'jerry', name: 'Jerry & Sharon', color: 'doerksen' },
+                { id: 'christopher', name: 'Christopher & Crystal', color: 'doerksen' },
+                { id: 'autumn', name: 'Autumn & Brandon', color: 'doerksen' },
+                { id: 'jeremy', name: 'Jeremy & Brenda', color: 'doerksen' },
+                { id: 'gwendolyn', name: 'Gwendolyn & Stan', color: 'doerksen' },
+                { id: 'wayne', name: 'Wayne & Janette', color: 'doerksen' },
+                { id: 'twila', name: 'Twila & Doug', color: 'doerksen' }
+            ];
+
+            const container = document.getElementById('passportContainer');
+            let html = '<div style="max-width: 800px; margin: 0 auto;">';
+            html += '<p style="margin-bottom: 20px;">Collect stamps by meeting at least one person from each family line!</p>';
+
+            familyLines.forEach(line => {
+                const stamped = localStorage.getItem(`passport-${line.id}`) === 'true';
+                const members = getChildren(line.id);
+
+                html += `
+                    <div style="
+                        background: white;
+                        border: 3px solid var(--${line.color});
+                        border-radius: 12px;
+                        padding: 20px;
+                        margin-bottom: 15px;
+                        position: relative;
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 style="margin: 0 0 10px 0; color: var(--${line.color});">${line.name}</h3>
+                                <p style="margin: 0; color: var(--text-light); font-size: 14px;">
+                                    ${members.length} family member${members.length !== 1 ? 's' : ''}
+                                </p>
+                            </div>
+                            <button onclick="togglePassport('${line.id}')" style="
+                                padding: 10px 20px;
+                                background: ${stamped ? 'var(--pete)' : 'var(--border)'};
+                                color: ${stamped ? 'white' : 'var(--text-dark)'};
+                                border: none;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                font-size: 16px;
+                            ">
+                                ${stamped ? '✓ Stamped' : 'Get Stamp'}
+                            </button>
+                        </div>
+                        ${stamped ? '<div style="position: absolute; top: 10px; right: 10px; font-size: 48px; opacity: 0.3;">✓</div>' : ''}
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+
+            const stamped = familyLines.filter(line => localStorage.getItem(`passport-${line.id}`) === 'true').length;
+            html += `
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: var(--bg-light); border-radius: 12px;">
+                    <h3>Progress: ${stamped} / ${familyLines.length} families visited</h3>
+                    <button onclick="resetPassport()" style="margin-top: 10px; padding: 10px 20px; background: var(--donald); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Reset Passport
+                    </button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function togglePassport(lineId) {
+            const current = localStorage.getItem(`passport-${lineId}`) === 'true';
+            localStorage.setItem(`passport-${lineId}`, (!current).toString());
+            generatePassport();
+        }
+
+        function resetPassport() {
+            const familyLines = ['marion-harold', 'jerry', 'christopher', 'autumn', 'jeremy', 'gwendolyn', 'wayne', 'twila'];
+            familyLines.forEach(line => localStorage.removeItem(`passport-${line}`));
+            generatePassport();
+        }
+
+        // Generate Relationship Quiz
+        function generateQuiz() {
+            const quizQuestions = [
+                {
+                    question: "Who are Marion Regier's children?",
+                    answers: ["Jerry, Christopher, Autumn, Jeremy, Wendell, Gwendolyn, Wayne, Twila", "Herman, Pete, Ruth, Ivan", "Tyler, Kelsey, Brock", "Whitney, Sterling, Saylor"],
+                    correct: 0
+                },
+                {
+                    question: "How many children do Christopher & Crystal have?",
+                    answers: ["3", "4", "5", "6"],
+                    correct: 2
+                },
+                {
+                    question: "Who are Haisley, Nella, Cash, and Henry's parents?",
+                    answers: ["Sterling & Kyla", "Whitney & Aaron", "Saylor & Bobbie", "Tyler"],
+                    correct: 1
+                },
+                {
+                    question: "Which family member died at age 1?",
+                    answers: ["Marion", "Harold", "Wendell", "Henry"],
+                    correct: 2
+                },
+                {
+                    question: "Who is married to Michaja?",
+                    answers: ["Daen Glover", "Shaedon Glover", "Tyler Doerksen", "Brock Doerksen"],
+                    correct: 1
+                },
+                {
+                    question: "How many grandchildren (Gen 3) does Marion have?",
+                    answers: ["5", "10", "15", "20"],
+                    correct: 1
+                },
+                {
+                    question: "Who are Finley and Ava's parents?",
+                    answers: ["Whitney & Aaron", "Sterling & Kyla", "Saylor & Bobbie", "Christopher & Crystal"],
+                    correct: 1
+                },
+                {
+                    question: "What generation are Justice and Quincy?",
+                    answers: ["Generation 1", "Generation 2", "Generation 3", "Generation 4"],
+                    correct: 2
+                }
+            ];
+
+            const container = document.getElementById('quizContainer');
+            let html = '<div style="max-width: 700px; margin: 0 auto;">';
+
+            quizQuestions.forEach((q, qIdx) => {
+                const answered = localStorage.getItem(`quiz-${qIdx}`);
+                const isCorrect = answered === q.correct.toString();
+
+                html += `
+                    <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; border-left: 4px solid var(--doerksen);">
+                        <h4 style="margin: 0 0 15px 0;">${qIdx + 1}. ${q.question}</h4>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                `;
+
+                q.answers.forEach((answer, aIdx) => {
+                    const isSelected = answered === aIdx.toString();
+                    const showResult = answered !== null;
+                    let bgColor = 'var(--bg-light)';
+                    let borderColor = 'var(--border)';
+
+                    if (showResult) {
+                        if (aIdx === q.correct) {
+                            bgColor = '#d4edda';
+                            borderColor = 'var(--pete)';
+                        } else if (isSelected && !isCorrect) {
+                            bgColor = '#f8d7da';
+                            borderColor = 'var(--donald)';
+                        }
+                    }
+
+                    html += `
+                        <button onclick="answerQuiz(${qIdx}, ${aIdx}, ${q.correct})" style="
+                            padding: 12px;
+                            background: ${bgColor};
+                            border: 2px solid ${borderColor};
+                            border-radius: 6px;
+                            cursor: pointer;
+                            text-align: left;
+                            transition: all 0.3s;
+                        ">
+                            ${isSelected ? (isCorrect ? '✓ ' : '✗ ') : ''}${answer}
+                        </button>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+
+            const score = quizQuestions.filter((q, idx) => localStorage.getItem(`quiz-${idx}`) === q.correct.toString()).length;
+            html += `
+                <div style="text-align: center; margin-top: 20px; padding: 20px; background: var(--bg-light); border-radius: 12px;">
+                    <h3>Score: ${score} / ${quizQuestions.length}</h3>
+                    <button onclick="resetQuiz()" style="margin-top: 10px; padding: 10px 20px; background: var(--donald); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Reset Quiz
+                    </button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function answerQuiz(questionIdx, answerIdx, correctIdx) {
+            localStorage.setItem(`quiz-${questionIdx}`, answerIdx.toString());
+            generateQuiz();
+        }
+
+        function resetQuiz() {
+            for (let i = 0; i < 10; i++) {
+                localStorage.removeItem(`quiz-${i}`);
+            }
+            generateQuiz();
+        }
+
+        // Initialize app
+        function initializeApp() {
+            console.log('Regier Family Tree App Initialized');
+            renderFamilyTree();
+            populateLocationFilter();
+            calculateStats();
+            generateWhosWho();
+            generateBingo();
+            generatePassport();
+            generateQuiz();
+        }
+    </script>
+</body>
+</html>
