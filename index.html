@@ -798,7 +798,7 @@
                     generation: 2,
                     line: 'pete',
                     location: '',
-                    children: ['jason', 'jerold', 'paula-bryan']
+                    children: ['jason', 'janelle-nathaniel', 'jaris-sheila']
                 },
                 {
                     id: 'gaylend-marcia',
@@ -807,7 +807,7 @@
                     generation: 2,
                     line: 'pete',
                     location: '',
-                    children: ['ann', 'john-sarah']
+                    children: ['paula-bryan', 'ann', 'john-sarah']
                 },
                 {
                     id: 'ronald-lorie',
@@ -1044,28 +1044,37 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['nathanial', 'natalie', 'nolan', 'noelle', 'nathan']
+                    children: []
                 },
                 {
-                    id: 'jerold',
-                    name: 'Jerold',
+                    id: 'janelle-nathaniel',
+                    name: 'Janelle & Nathaniel',
                     parents: 'james-joyce',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['shane', 'joel', 'susanna', 'josiah', 'jonah', 'sophia', 'serena']
+                    children: ['natalie', 'nolan', 'noelle', 'nathan']
                 },
                 {
-                    id: 'paula-bryan',
-                    name: 'Paula & Bryan Holtz',
+                    id: 'jaris-sheila',
+                    name: 'Jaris & Sheila',
                     parents: 'james-joyce',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['beckett', 'piper', 'scarlett', 'radlynn']
+                    children: ['joel', 'samara', 'josiah', 'jonah', 'sabella', 'sophia', 'serena']
                 },
 
                 // Gaylend & Marcia's children
+                {
+                    id: 'paula-bryan',
+                    name: 'Paula & Bryan Holtz',
+                    parents: 'gaylend-marcia',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['beckett', 'piper', 'scarlett', 'raelynn']
+                },
                 {
                     id: 'ann',
                     name: 'Ann',
@@ -1082,7 +1091,7 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: []
+                    children: [] // TODO: Add child name when provided
                 },
 
                 // Adrian's children
@@ -1330,19 +1339,11 @@
                     location: ''
                 },
 
-                // Jason's children
-                {
-                    id: 'nathanial',
-                    name: 'Nathanial',
-                    parents: 'jason',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
+                // Janelle & Nathaniel's children
                 {
                     id: 'natalie',
                     name: 'Natalie',
-                    parents: 'jason',
+                    parents: 'janelle-nathaniel',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1350,7 +1351,7 @@
                 {
                     id: 'nolan',
                     name: 'Nolan',
-                    parents: 'jason',
+                    parents: 'janelle-nathaniel',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1358,7 +1359,7 @@
                 {
                     id: 'noelle',
                     name: 'Noelle',
-                    parents: 'jason',
+                    parents: 'janelle-nathaniel',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1366,33 +1367,25 @@
                 {
                     id: 'nathan',
                     name: 'Nathan',
-                    parents: 'jason',
+                    parents: 'janelle-nathaniel',
                     generation: 4,
                     line: 'pete',
                     location: ''
                 },
 
-                // Jerold's children
-                {
-                    id: 'shane',
-                    name: 'Shane',
-                    parents: 'jerold',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
-                },
+                // Jaris & Sheila's children
                 {
                     id: 'joel',
                     name: 'Joel',
-                    parents: 'jerold',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
                 },
                 {
-                    id: 'susanna',
-                    name: 'Susanna',
-                    parents: 'jerold',
+                    id: 'samara',
+                    name: 'Samara',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1400,7 +1393,7 @@
                 {
                     id: 'josiah',
                     name: 'Josiah',
-                    parents: 'jerold',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1408,7 +1401,15 @@
                 {
                     id: 'jonah',
                     name: 'Jonah',
-                    parents: 'jerold',
+                    parents: 'jaris-sheila',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'sabella',
+                    name: 'Sabella',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1416,7 +1417,7 @@
                 {
                     id: 'sophia',
                     name: 'Sophia',
-                    parents: 'jerold',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1424,7 +1425,7 @@
                 {
                     id: 'serena',
                     name: 'Serena',
-                    parents: 'jerold',
+                    parents: 'jaris-sheila',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -1456,8 +1457,8 @@
                     location: ''
                 },
                 {
-                    id: 'radlynn',
-                    name: 'Radlynn',
+                    id: 'raelynn',
+                    name: 'Raelynn',
                     parents: 'paula-bryan',
                     generation: 4,
                     line: 'pete',
