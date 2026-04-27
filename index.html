@@ -816,7 +816,7 @@
                     generation: 2,
                     line: 'pete',
                     location: '',
-                    children: ['adrian', 'christopher-ronald', 'chantel-jason', 'heather-chase', 'natalie-brandon']
+                    children: ['adrian', 'rachelle-chris', 'chantel-jason', 'melissa-chase', 'natalie-brandon']
                 },
                 {
                     id: 'donald-lisa',
@@ -825,7 +825,7 @@
                     generation: 2,
                     line: 'pete',
                     location: '',
-                    children: ['douglas-mary', 'benjamin-mary', 'elizabeth']
+                    children: ['mary-donald', 'benjamin-mary', 'elizabeth']
                 },
 
                 // Ronald & Lorie's children
@@ -836,34 +836,34 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
+                    children: []
+                },
+                {
+                    id: 'rachelle-chris',
+                    name: 'Rachelle & Chris Fryzek',
+                    parents: 'ronald-lorie',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
                     children: ['leighton', 'christian', 'drake']
                 },
                 {
-                    id: 'christopher-ronald',
-                    name: 'Christopher & Gena',
-                    parents: 'ronald-lorie',
-                    generation: 3,
-                    line: 'pete',
-                    location: '',
-                    children: ['kelly', 'felicity', 'griffin', 'abigail']
-                },
-                {
                     id: 'chantel-jason',
-                    name: 'Chantel & Jason Casey',
+                    name: 'Chantel & Jason Cave',
                     parents: 'ronald-lorie',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['emilina']
+                    children: ['stella', 'felicity', 'griffin']
                 },
                 {
-                    id: 'heather-chase',
-                    name: 'Heather & Chase Sandoz',
+                    id: 'melissa-chase',
+                    name: 'Melissa & Chase Sauder',
                     parents: 'ronald-lorie',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: []
+                    children: ['anly', 'judson', 'kipton']
                 },
                 {
                     id: 'natalie-brandon',
@@ -872,18 +872,18 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: []
+                    children: ['emaline', 'lynden']
                 },
 
                 // Donald & Lisa's children
                 {
-                    id: 'douglas-mary',
-                    name: 'Douglas & Mary',
+                    id: 'mary-donald',
+                    name: 'Mary',
                     parents: 'donald-lisa',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['peter-a']
+                    children: ['ashley']
                 },
                 {
                     id: 'benjamin-mary',
@@ -892,7 +892,7 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: []
+                    children: ['peter-a']
                 },
                 {
                     id: 'elizabeth',
@@ -1094,11 +1094,11 @@
                     children: [] // TODO: Add child name when provided
                 },
 
-                // Adrian's children
+                // Rachelle & Chris's children
                 {
                     id: 'leighton',
                     name: 'Leighton',
-                    parents: 'adrian',
+                    parents: 'rachelle-chris',
                     generation: 4,
                     line: 'pete',
                     location: '',
@@ -1107,7 +1107,7 @@
                 {
                     id: 'christian',
                     name: 'Christian',
-                    parents: 'adrian',
+                    parents: 'rachelle-chris',
                     generation: 4,
                     line: 'pete',
                     location: '',
@@ -1116,45 +1116,7 @@
                 {
                     id: 'drake',
                     name: 'Drake',
-                    parents: 'adrian',
-                    generation: 4,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-
-                // Christopher & Gena's children
-                {
-                    id: 'kelly',
-                    name: 'Kelly',
-                    parents: 'christopher-ronald',
-                    generation: 4,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'felicity',
-                    name: 'Felicity',
-                    parents: 'christopher-ronald',
-                    generation: 4,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'griffin',
-                    name: 'Griffin',
-                    parents: 'christopher-ronald',
-                    generation: 4,
-                    line: 'pete',
-                    location: '',
-                    children: []
-                },
-                {
-                    id: 'abigail',
-                    name: 'Abigail',
-                    parents: 'christopher-ronald',
+                    parents: 'rachelle-chris',
                     generation: 4,
                     line: 'pete',
                     location: '',
@@ -1163,8 +1125,26 @@
 
                 // Chantel & Jason's children
                 {
-                    id: 'emilina',
-                    name: 'Emilina',
+                    id: 'stella',
+                    name: 'Stella',
+                    parents: 'chantel-jason',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'felicity',
+                    name: 'Felicity',
+                    parents: 'chantel-jason',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'griffin',
+                    name: 'Griffin',
                     parents: 'chantel-jason',
                     generation: 4,
                     line: 'pete',
@@ -1172,11 +1152,71 @@
                     children: []
                 },
 
-                // Douglas & Mary's children
+                // Melissa & Chase's children
+                {
+                    id: 'anly',
+                    name: 'Anly',
+                    parents: 'melissa-chase',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'judson',
+                    name: 'Judson',
+                    parents: 'melissa-chase',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'kipton',
+                    name: 'Kipton',
+                    parents: 'melissa-chase',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+
+                // Natalie & Brandon's children
+                {
+                    id: 'emaline',
+                    name: 'Emaline',
+                    parents: 'natalie-brandon',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'lynden',
+                    name: 'Lynden',
+                    parents: 'natalie-brandon',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+
+                // Mary's children
+                {
+                    id: 'ashley',
+                    name: 'Ashley',
+                    parents: 'mary-donald',
+                    generation: 4,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+
+                // Benjamin & Mary's children
                 {
                     id: 'peter-a',
                     name: 'Peter A. Regier',
-                    parents: 'douglas-mary',
+                    parents: 'benjamin-mary',
                     generation: 4,
                     line: 'pete',
                     location: '',
