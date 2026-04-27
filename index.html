@@ -716,7 +716,7 @@
                     id: 'pete-rachel',
                     name: 'Pete & Rachel Regier',
                     parents: null,
-                    children: ['james-joyce', 'gaylend-marcia', 'ronald-lorie', 'donald-lisa'],
+                    children: ['james-joyce', 'gaylend-marcia', 'phillip-cindy', 'carol', 'ronald-lorie', 'donald-lisa'],
                     generation: 1,
                     line: 'pete',
                     location: ''
@@ -808,6 +808,24 @@
                     line: 'pete',
                     location: '',
                     children: ['paula-bryan', 'ann', 'john-sarah']
+                },
+                {
+                    id: 'phillip-cindy',
+                    name: 'Phillip & Cindy',
+                    parents: 'pete-rachel',
+                    generation: 2,
+                    line: 'pete',
+                    location: '',
+                    children: ['phillip-jr', 'shanel-jd', 'lynette-john']
+                },
+                {
+                    id: 'carol',
+                    name: 'Carol',
+                    parents: 'pete-rachel',
+                    generation: 2,
+                    line: 'pete',
+                    location: '',
+                    children: ['brent-amy', 'darin-katie', 'bradley-julie', 'renae-tim', 'greg-mollie']
                 },
                 {
                     id: 'ronald-lorie',
@@ -1092,6 +1110,82 @@
                     line: 'pete',
                     location: '',
                     children: [] // TODO: Add child name when provided
+                },
+
+                // Phillip & Cindy's children
+                {
+                    id: 'phillip-jr',
+                    name: 'Phillip Jr.',
+                    parents: 'phillip-cindy',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'shanel-jd',
+                    name: 'Shanel & JD Adams',
+                    parents: 'phillip-cindy',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['famke']
+                },
+                {
+                    id: 'lynette-john',
+                    name: 'Lynette & John Haddad',
+                    parents: 'phillip-cindy',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: []
+                },
+
+                // Carol's children
+                {
+                    id: 'brent-amy',
+                    name: 'Brent & Amy',
+                    parents: 'carol',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['jena']
+                },
+                {
+                    id: 'darin-katie',
+                    name: 'Darin & Katie',
+                    parents: 'carol',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['colton-houser', 'hannah-darin', 'trey', 'ashly']
+                },
+                {
+                    id: 'bradley-julie',
+                    name: 'Bradley & Julie',
+                    parents: 'carol',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['elliana', 'wyatt', 'liza', 'william']
+                },
+                {
+                    id: 'renae-tim',
+                    name: 'Renae & Tim Crothers',
+                    parents: 'carol',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['vivian', 'charlton']
+                },
+                {
+                    id: 'greg-mollie',
+                    name: 'Greg & Mollie',
+                    parents: 'carol',
+                    generation: 3,
+                    line: 'pete',
+                    location: '',
+                    children: ['knox', 'rhett', 'clara', 'grace']
                 },
 
                 // Rachelle & Chris's children
@@ -1500,6 +1594,146 @@
                     id: 'raelynn',
                     name: 'Raelynn',
                     parents: 'paula-bryan',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Shanel & JD Adams's children
+                {
+                    id: 'famke',
+                    name: 'Famke',
+                    parents: 'shanel-jd',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Brent & Amy's children
+                {
+                    id: 'jena',
+                    name: 'Jena',
+                    parents: 'brent-amy',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Darin & Katie's children
+                {
+                    id: 'colton-houser',
+                    name: 'Colton Houser',
+                    parents: 'darin-katie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'hannah-darin',
+                    name: 'Hannah',
+                    parents: 'darin-katie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'trey',
+                    name: 'Trey',
+                    parents: 'darin-katie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'ashly',
+                    name: 'Ashly',
+                    parents: 'darin-katie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Bradley & Julie's children
+                {
+                    id: 'elliana',
+                    name: 'Elliana',
+                    parents: 'bradley-julie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'wyatt',
+                    name: 'Wyatt',
+                    parents: 'bradley-julie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'liza',
+                    name: 'Liza',
+                    parents: 'bradley-julie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'william',
+                    name: 'William',
+                    parents: 'bradley-julie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Renae & Tim's children
+                {
+                    id: 'vivian',
+                    name: 'Vivian',
+                    parents: 'renae-tim',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'charlton',
+                    name: 'Charlton',
+                    parents: 'renae-tim',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+
+                // Greg & Mollie's children
+                {
+                    id: 'knox',
+                    name: 'Knox',
+                    parents: 'greg-mollie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'rhett',
+                    name: 'Rhett',
+                    parents: 'greg-mollie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'clara',
+                    name: 'Clara',
+                    parents: 'greg-mollie',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'grace',
+                    name: 'Grace',
+                    parents: 'greg-mollie',
                     generation: 4,
                     line: 'pete',
                     location: ''
