@@ -563,8 +563,6 @@
                         <option value="all">All Families</option>
                         <option value="herman">Herman & Sarah</option>
                         <option value="pete">Pete & Rachel</option>
-                        <option value="ronald">Ronald & Lorie</option>
-                        <option value="donald">Donald & Lisa</option>
                         <option value="doerksen">Marion & Harold / Doerksen</option>
                         <option value="ruth">Ruth & Curtis</option>
                         <option value="ivan">Ivan & Ann</option>
@@ -599,14 +597,6 @@
                 <div class="legend-item">
                     <div class="legend-color" style="background: var(--pete)"></div>
                     <span>Pete & Rachel</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--ronald)"></div>
-                    <span>Ronald & Lorie</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--donald)"></div>
-                    <span>Donald & Lisa</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: var(--doerksen)"></div>
@@ -726,27 +716,9 @@
                     id: 'pete-rachel',
                     name: 'Pete & Rachel Regier',
                     parents: null,
-                    children: ['james-joyce', 'gaylend-marcia'],
+                    children: ['james-joyce', 'gaylend-marcia', 'ronald-lorie', 'donald-lisa'],
                     generation: 1,
                     line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'ronald-lorie',
-                    name: 'Ronald & Lorie',
-                    parents: null,
-                    children: ['adrian', 'christopher-ronald', 'chantel-jason', 'heather-chase', 'natalie-brandon'],
-                    generation: 1,
-                    line: 'ronald',
-                    location: ''
-                },
-                {
-                    id: 'donald-lisa',
-                    name: 'Donald & Lisa',
-                    parents: null,
-                    children: ['douglas-mary', 'benjamin-mary', 'elizabeth'],
-                    generation: 1,
-                    line: 'donald',
                     location: ''
                 },
                 {
@@ -837,14 +809,32 @@
                     location: '',
                     children: ['ann', 'john-sarah']
                 },
+                {
+                    id: 'ronald-lorie',
+                    name: 'Ronald & Lorie',
+                    parents: 'pete-rachel',
+                    generation: 2,
+                    line: 'pete',
+                    location: '',
+                    children: ['adrian', 'christopher-ronald', 'chantel-jason', 'heather-chase', 'natalie-brandon']
+                },
+                {
+                    id: 'donald-lisa',
+                    name: 'Donald & Lisa',
+                    parents: 'pete-rachel',
+                    generation: 2,
+                    line: 'pete',
+                    location: '',
+                    children: ['douglas-mary', 'benjamin-mary', 'elizabeth']
+                },
 
                 // Ronald & Lorie's children
                 {
                     id: 'adrian',
                     name: 'Adrian',
                     parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: ['leighton', 'christian', 'drake']
                 },
@@ -852,8 +842,8 @@
                     id: 'christopher-ronald',
                     name: 'Christopher & Gena',
                     parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: ['kelly', 'felicity', 'griffin', 'abigail']
                 },
@@ -861,8 +851,8 @@
                     id: 'chantel-jason',
                     name: 'Chantel & Jason Casey',
                     parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: ['emilina']
                 },
@@ -870,8 +860,8 @@
                     id: 'heather-chase',
                     name: 'Heather & Chase Sandoz',
                     parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -879,8 +869,8 @@
                     id: 'natalie-brandon',
                     name: 'Natalie & Brandon Gunther',
                     parents: 'ronald-lorie',
-                    generation: 2,
-                    line: 'ronald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -890,8 +880,8 @@
                     id: 'douglas-mary',
                     name: 'Douglas & Mary',
                     parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: ['peter-a']
                 },
@@ -899,8 +889,8 @@
                     id: 'benjamin-mary',
                     name: 'Benjamin & Mary',
                     parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -908,8 +898,8 @@
                     id: 'elizabeth',
                     name: 'Elizabeth',
                     parents: 'donald-lisa',
-                    generation: 2,
-                    line: 'donald',
+                    generation: 3,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1100,8 +1090,8 @@
                     id: 'leighton',
                     name: 'Leighton',
                     parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1109,8 +1099,8 @@
                     id: 'christian',
                     name: 'Christian',
                     parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1118,8 +1108,8 @@
                     id: 'drake',
                     name: 'Drake',
                     parents: 'adrian',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1129,8 +1119,8 @@
                     id: 'kelly',
                     name: 'Kelly',
                     parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1138,8 +1128,8 @@
                     id: 'felicity',
                     name: 'Felicity',
                     parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1147,8 +1137,8 @@
                     id: 'griffin',
                     name: 'Griffin',
                     parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1156,8 +1146,8 @@
                     id: 'abigail',
                     name: 'Abigail',
                     parents: 'christopher-ronald',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1167,8 +1157,8 @@
                     id: 'emilina',
                     name: 'Emilina',
                     parents: 'chantel-jason',
-                    generation: 3,
-                    line: 'ronald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1178,8 +1168,8 @@
                     id: 'peter-a',
                     name: 'Peter A. Regier',
                     parents: 'douglas-mary',
-                    generation: 3,
-                    line: 'donald',
+                    generation: 4,
+                    line: 'pete',
                     location: '',
                     children: []
                 },
@@ -1830,12 +1820,10 @@
             const container = document.getElementById('familyMapContainer');
             container.innerHTML = '';
 
-            // Define the 7 family lines
+            // Define the 5 family lines (root couples in Gen 1)
             const familyLines = [
                 { id: 'herman-sarah', name: 'Herman &\nSarah Regier', line: 'herman' },
                 { id: 'pete-rachel', name: 'Pete &\nRachel Regier', line: 'pete' },
-                { id: 'ronald-lorie', name: 'Ronald &\nLorie', line: 'ronald' },
-                { id: 'donald-lisa', name: 'Donald &\nLisa', line: 'donald' },
                 { id: 'marion-harold', name: 'Marion &\nHarold', line: 'doerksen' },
                 { id: 'ruth-curtis', name: 'Ruth &\nCurtis Preheim', line: 'ruth' },
                 { id: 'ivan-ann', name: 'Ivan &\nAnn', line: 'ivan' }
@@ -2126,8 +2114,6 @@
                 gen5: all.filter(p => p.generation === 5).length,
                 hermanLine: all.filter(p => p.line === 'herman').length,
                 peteLine: all.filter(p => p.line === 'pete').length,
-                ronaldLine: all.filter(p => p.line === 'ronald').length,
-                donaldLine: all.filter(p => p.line === 'donald').length,
                 doerksenLine: all.filter(p => p.line === 'doerksen').length,
                 ruthLine: all.filter(p => p.line === 'ruth').length,
                 ivanLine: all.filter(p => p.line === 'ivan').length
@@ -2162,14 +2148,6 @@
                 <div class="stat-card">
                     <div class="stat-number">${stats.peteLine}</div>
                     <div class="stat-label">Pete & Rachel Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.ronaldLine}</div>
-                    <div class="stat-label">Ronald & Lorie Line</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.donaldLine}</div>
-                    <div class="stat-label">Donald & Lisa Line</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.doerksenLine}</div>
