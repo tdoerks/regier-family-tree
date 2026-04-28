@@ -1179,6 +1179,7 @@
         <!-- Navigation Tabs -->
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('map')">🗺️ Family Map</button>
+            <button class="tab-button" onclick="showTab('tree')">🌳 Interactive Tree</button>
             <button class="tab-button" onclick="showTab('stats')">📊 Statistics</button>
             <button class="tab-button" onclick="showTab('bingo')">🎮 Family Bingo</button>
             <button class="tab-button" onclick="showTab('passport')">📖 Reunion Passport</button>
@@ -1275,6 +1276,36 @@
                 <div id="compactContainer" class="compact-container">
                     <!-- Compact list will be generated here -->
                 </div>
+            </div>
+        </div>
+
+        <!-- Interactive Family Tree Tab -->
+        <div class="tab-content" id="treeTab">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search family by name..." oninput="searchFamily()">
+                <select id="generationFilter" onchange="filterByGeneration()">
+                    <option value="">All Generations</option>
+                    <option value="1">Generation 1</option>
+                    <option value="2">Generation 2</option>
+                    <option value="3">Generation 3</option>
+                    <option value="4">Generation 4</option>
+                    <option value="5">Generation 5</option>
+                </select>
+                <select id="lineFilter" onchange="filterByLine()">
+                    <option value="">All Family Lines</option>
+                    <option value="herman">Herman & Sarah</option>
+                    <option value="pete">Pete & Rachel</option>
+                    <option value="doerksen">Marion & Harold</option>
+                    <option value="ruth">Ruth & Curtis</option>
+                    <option value="ivan">Ivan & Ann</option>
+                </select>
+                <select id="locationFilter" onchange="filterByLocation()">
+                    <option value="">All Locations</option>
+                </select>
+                <button onclick="clearFilters()" style="margin-left: 10px;">Clear Filters</button>
+            </div>
+            <div id="familyTreeContainer" class="family-tree-container">
+                <!-- Family tree will be dynamically generated here -->
             </div>
         </div>
 
@@ -3900,11 +3931,17 @@
 
             // Update button states
             document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`viewBtn-${viewName}`).classList.add('active');
+            const viewBtn = document.getElementById(`viewBtn-${viewName}`);
+            if (viewBtn) {
+                viewBtn.classList.add('active');
+            }
 
             // Update view visibility
             document.querySelectorAll('.map-view').forEach(view => view.classList.remove('active'));
-            document.getElementById(`${viewName}View`).classList.add('active');
+            const viewContainer = document.getElementById(`${viewName}View`);
+            if (viewContainer) {
+                viewContainer.classList.add('active');
+            }
 
             // Render the selected view
             if (viewName === 'treeoflife') {
