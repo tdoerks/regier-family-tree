@@ -751,7 +751,7 @@
                     id: 'marion-harold',
                     name: 'Marion & Harold',
                     parents: null,
-                    children: ['jerry-sharon'],
+                    children: ['jerry-sharon', 'wendell', 'gwen-stan', 'wayne-jeanette'],
                     generation: 1,
                     line: 'doerksen',
                     location: ''
@@ -966,6 +966,33 @@
                     line: 'doerksen',
                     location: '',
                     children: ['chris-crystal', 'autumn-brandon', 'jeremy-brenda', 'daen-jennifer-step', 'shaedon-michaja-step']
+                },
+                {
+                    id: 'wendell',
+                    name: 'Wendell',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'gwen-stan',
+                    name: 'Gwen & Stan Ortman',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['caley-maria', 'lindsey-austin', 'kelsey-bretty']
+                },
+                {
+                    id: 'wayne-jeanette',
+                    name: 'Wayne & Jeanette',
+                    parents: 'marion-harold',
+                    generation: 2,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['tory-crystal', 'tyler-mary', 'talia-gregg']
                 },
 
                 // Ruth & Curtis's children
@@ -1509,6 +1536,64 @@
                     line: 'doerksen',
                     location: '',
                     children: ['ava-shaedon', 'addish']
+                },
+
+                // Gwen & Stan's children
+                {
+                    id: 'caley-maria',
+                    name: 'Caley & Maria',
+                    parents: 'gwen-stan',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['alexa-step']
+                },
+                {
+                    id: 'lindsey-austin',
+                    name: 'Lindsey & Austin Unruh',
+                    parents: 'gwen-stan',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['ezekial', 'isaiah', 'silas']
+                },
+                {
+                    id: 'kelsey-bretty',
+                    name: 'Kelsey & Bretty Pidde',
+                    parents: 'gwen-stan',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['milo']
+                },
+
+                // Wayne & Jeanette's children
+                {
+                    id: 'tory-crystal',
+                    name: 'Tory & Crystal',
+                    parents: 'wayne-jeanette',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['rian', 'quinn']
+                },
+                {
+                    id: 'tyler-mary',
+                    name: 'Tyler & Mary',
+                    parents: 'wayne-jeanette',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['deacon', 'thea']
+                },
+                {
+                    id: 'talia-gregg',
+                    name: 'Talia & Gregg Filsinger',
+                    parents: 'wayne-jeanette',
+                    generation: 3,
+                    line: 'doerksen',
+                    location: '',
+                    children: ['hayden-step', 'tracey-step']
                 },
 
                 // Charlene & Alan's children
@@ -2336,6 +2421,117 @@
                     id: 'addish',
                     name: 'Addish',
                     parents: 'shaedon-michaja-step',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Caley & Maria's children (step)
+                {
+                    id: 'alexa-step',
+                    name: 'Alexa (step)',
+                    parents: 'caley-maria',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Lindsey & Austin's children
+                {
+                    id: 'ezekial',
+                    name: 'Ezekial',
+                    parents: 'lindsey-austin',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'isaiah',
+                    name: 'Isaiah',
+                    parents: 'lindsey-austin',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'silas',
+                    name: 'Silas',
+                    parents: 'lindsey-austin',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Kelsey & Bretty's children
+                {
+                    id: 'milo',
+                    name: 'Milo',
+                    parents: 'kelsey-bretty',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Tory & Crystal's children
+                {
+                    id: 'rian',
+                    name: 'Rian',
+                    parents: 'tory-crystal',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'quinn',
+                    name: 'Quinn',
+                    parents: 'tory-crystal',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Tyler & Mary's children
+                {
+                    id: 'deacon',
+                    name: 'Deacon',
+                    parents: 'tyler-mary',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'thea',
+                    name: 'Thea',
+                    parents: 'tyler-mary',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+
+                // Talia & Gregg's children (step)
+                {
+                    id: 'hayden-step',
+                    name: 'Hayden (step)',
+                    parents: 'talia-gregg',
+                    generation: 4,
+                    line: 'doerksen',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'tracey-step',
+                    name: 'Tracey (step)',
+                    parents: 'talia-gregg',
                     generation: 4,
                     line: 'doerksen',
                     location: '',
