@@ -3911,7 +3911,7 @@
             populateFamilyNames();
 
             // Check for saved preference
-            const savedView = localStorage.getItem('preferredMapView') || 'treeoflife';
+            const savedView = localStorage.getItem('preferredMapView') || 'traditional';
             switchMapView(savedView);
         }
 
@@ -4339,10 +4339,19 @@
 
             container.innerHTML = '';
 
-            // Force width if container is not visible yet
+            // Get width - use parent's parent (the main view container) if container is hidden
             let width = container.clientWidth;
             if (width === 0 || !width) {
-                width = container.parentElement.clientWidth || 1000;
+                // Try parent element
+                width = container.parentElement?.clientWidth;
+                if (!width || width === 0) {
+                    // Try grandparent (the view div)
+                    width = container.parentElement?.parentElement?.clientWidth;
+                }
+                if (!width || width === 0) {
+                    // Fallback to window width with some padding
+                    width = Math.max(1000, window.innerWidth - 40);
+                }
             }
             const height = 800;
             const centerX = width / 2;
