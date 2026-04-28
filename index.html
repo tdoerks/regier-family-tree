@@ -343,89 +343,111 @@
             padding: 20px 0;
         }
 
-        .family-row {
-            margin-bottom: 40px;
+        /* Traditional Tree Layout */
+        .tree-container {
+            margin-bottom: 60px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow-x: auto;
         }
 
-        .generation-header {
-            background: #2c3e50;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .family-line-container {
+        .tree-node {
             display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            flex-wrap: nowrap;
-            margin-bottom: 15px;
-        }
-
-        /* Root Couple Boxes (Gen 1) - Colored backgrounds with icons */
-        .root-box {
-            padding: 16px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            min-width: 160px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-direction: column;
+            align-items: center;
             position: relative;
         }
 
-        .root-box::before {
-            content: '👨\u200d👩\u200d👧\u200d👦';
-            font-size: 1.5em;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .root-box.herman { background: var(--herman); }
-        .root-box.pete { background: var(--pete); }
-        .root-box.ronald { background: var(--ronald); }
-        .root-box.donald { background: var(--donald); }
-        .root-box.doerksen { background: var(--doerksen); }
-        .root-box.ruth { background: var(--ruth); }
-        .root-box.ivan { background: var(--ivan); }
-
-        /* Descendant Boxes (Gen 2+) - White with colored left border */
-        .person-box {
+        .tree-person {
             background: white;
             border: 2px solid #e0e0e0;
-            border-left: 4px solid var(--doerksen);
-            border-radius: 6px;
-            padding: 10px 14px;
-            min-width: 140px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            font-size: 0.9em;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            transition: all 0.2s ease;
         }
 
-        .person-box.herman { border-left-color: var(--herman); }
-        .person-box.pete { border-left-color: var(--pete); }
-        .person-box.ronald { border-left-color: var(--ronald); }
-        .person-box.donald { border-left-color: var(--donald); }
-        .person-box.doerksen { border-left-color: var(--doerksen); }
-        .person-box.ruth { border-left-color: var(--ruth); }
-        .person-box.ivan { border-left-color: var(--ivan); }
-
-        /* Arrows/connectors */
-        .arrow {
-            color: #999;
-            font-size: 1.5em;
-            align-self: center;
+        .tree-person:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
-        /* Column layout for multiple people */
-        .person-column {
+        /* Root person styling with colored background */
+        .root-person {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 16px 24px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .root-person.herman { background: var(--herman); border-color: var(--herman); }
+        .root-person.pete { background: var(--pete); border-color: var(--pete); }
+        .root-person.ronald { background: var(--ronald); border-color: var(--ronald); }
+        .root-person.donald { background: var(--donald); border-color: var(--donald); }
+        .root-person.doerksen { background: var(--doerksen); border-color: var(--doerksen); }
+        .root-person.ruth { background: var(--ruth); border-color: var(--ruth); }
+        .root-person.ivan { background: var(--ivan); border-color: var(--ivan); }
+
+        /* Descendant boxes with colored left border */
+        .tree-person.herman:not(.root-person) { border-left: 5px solid var(--herman); }
+        .tree-person.pete:not(.root-person) { border-left: 5px solid var(--pete); }
+        .tree-person.ronald:not(.root-person) { border-left: 5px solid var(--ronald); }
+        .tree-person.donald:not(.root-person) { border-left: 5px solid var(--donald); }
+        .tree-person.doerksen:not(.root-person) { border-left: 5px solid var(--doerksen); }
+        .tree-person.ruth:not(.root-person) { border-left: 5px solid var(--ruth); }
+        .tree-person.ivan:not(.root-person) { border-left: 5px solid var(--ivan); }
+
+        /* Vertical connector line */
+        .v-line {
+            width: 2px;
+            height: 30px;
+            background: #999;
+            margin: 0 auto;
+        }
+
+        /* Children container */
+        .tree-children {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* Horizontal connector line */
+        .h-line {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #999;
+            z-index: -1;
+        }
+
+        /* Connect h-line to first and last child */
+        .tree-children > .tree-node:first-child::before,
+        .tree-children > .tree-node:last-child::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            width: 50%;
+            height: 2px;
+            background: #999;
+        }
+
+        .tree-children > .tree-node:first-child::before {
+            left: 50%;
+        }
+
+        .tree-children > .tree-node:last-child::after {
+            right: 50%;
         }
 
         .print-button {
@@ -445,19 +467,23 @@
         }
 
         @media (max-width: 768px) {
-            .family-line-container {
+            .tree-children {
                 flex-direction: column;
-                gap: 15px;
+                gap: 5px;
             }
 
-            .root-box, .person-box {
-                min-width: auto;
-                width: 100%;
+            .tree-person {
+                font-size: 0.85em;
+                padding: 10px 15px;
             }
 
-            .arrow {
-                transform: rotate(90deg);
-                font-size: 1.2em;
+            .h-line {
+                display: none;
+            }
+
+            .tree-children > .tree-node:first-child::before,
+            .tree-children > .tree-node:last-child::after {
+                display: none;
             }
         }
 
@@ -483,24 +509,24 @@
                 font-size: 9pt;
             }
 
-            .root-box, .person-box {
-                padding: 6px 10px;
+            .tree-person {
+                padding: 6px 12px;
                 font-size: 8pt;
-                min-width: 100px;
             }
 
-            .generation-header {
-                font-size: 7pt;
-                padding: 4px 8px;
+            .root-person {
+                padding: 8px 14px;
+                font-size: 9pt;
             }
 
-            .family-row {
-                margin-bottom: 20px;
+            .tree-container {
+                margin-bottom: 30px;
+                padding: 10px;
                 page-break-inside: avoid;
             }
 
-            .arrow {
-                font-size: 1.2em;
+            .v-line {
+                height: 20px;
             }
         }
     </style>
@@ -2347,111 +2373,76 @@
             const container = document.getElementById('familyMapContainer');
             container.innerHTML = '';
 
-            // Define the 5 family lines (root couples in Gen 1)
+            // Define the 7 family lines (root couples in Gen 1)
             const familyLines = [
-                { id: 'herman-sarah', name: 'Herman &\nSarah Regier', line: 'herman' },
-                { id: 'pete-rachel', name: 'Pete &\nRachel Regier', line: 'pete' },
-                { id: 'marion-harold', name: 'Marion &\nHarold', line: 'doerksen' },
-                { id: 'ruth-curtis', name: 'Ruth &\nCurtis Preheim', line: 'ruth' },
-                { id: 'ivan-ann', name: 'Ivan &\nAnn', line: 'ivan' }
+                { id: 'herman-sarah', name: 'Herman & Sarah Regier', line: 'herman' },
+                { id: 'pete-rachel', name: 'Pete & Rachel Regier', line: 'pete' },
+                { id: 'ronald-lorie', name: 'Ronald & Lorie', line: 'ronald' },
+                { id: 'donald-lisa', name: 'Donald & Lisa', line: 'donald' },
+                { id: 'marion-harold', name: 'Marion & Harold Doerksen', line: 'doerksen' },
+                { id: 'ruth-curtis', name: 'Ruth & Curtis Preheim', line: 'ruth' },
+                { id: 'ivan-ann', name: 'Ivan & Ann', line: 'ivan' }
             ];
 
-            // Render each family line as a horizontal flowchart
+            // Render each family line as a traditional vertical tree
             familyLines.forEach(rootFamily => {
-                const row = document.createElement('div');
-                row.className = 'family-row';
+                const treeContainer = document.createElement('div');
+                treeContainer.className = 'tree-container';
 
-                const lineContainer = document.createElement('div');
-                lineContainer.className = 'family-line-container';
+                // Create the tree structure
+                const treeNode = renderTreeNode(rootFamily.id, rootFamily.line);
+                treeContainer.appendChild(treeNode);
 
-                // 1. ROOT COUPLE (Gen 1)
-                const rootBox = document.createElement('div');
-                rootBox.className = `root-box ${rootFamily.line}`;
-                rootBox.innerHTML = rootFamily.name.replace(/\n/g, '<br>');
-                lineContainer.appendChild(rootBox);
-
-                // Arrow
-                const arrow1 = document.createElement('span');
-                arrow1.className = 'arrow';
-                arrow1.textContent = '→';
-                lineContainer.appendChild(arrow1);
-
-                // 2. CHILDREN (Gen 2)
-                const gen2Members = getAllMembers().filter(p => p.line === rootFamily.line && p.generation === 2);
-                if (gen2Members.length > 0) {
-                    const gen2Column = document.createElement('div');
-                    gen2Column.className = 'person-column';
-                    gen2Members.forEach(person => {
-                        const box = document.createElement('div');
-                        box.className = `person-box ${rootFamily.line}`;
-                        box.textContent = person.name;
-                        gen2Column.appendChild(box);
-                    });
-                    lineContainer.appendChild(gen2Column);
-                }
-
-                // Arrow
-                const arrow2 = document.createElement('span');
-                arrow2.className = 'arrow';
-                arrow2.textContent = '→';
-                lineContainer.appendChild(arrow2);
-
-                // 3. GRANDCHILDREN (Gen 3)
-                const gen3Members = getAllMembers().filter(p => p.line === rootFamily.line && p.generation === 3);
-                if (gen3Members.length > 0) {
-                    const gen3Column = document.createElement('div');
-                    gen3Column.className = 'person-column';
-                    gen3Members.forEach(person => {
-                        const box = document.createElement('div');
-                        box.className = `person-box ${rootFamily.line}`;
-                        box.textContent = person.name;
-                        gen3Column.appendChild(box);
-                    });
-                    lineContainer.appendChild(gen3Column);
-                }
-
-                // Arrow
-                const gen4Members = getAllMembers().filter(p => p.line === rootFamily.line && p.generation === 4);
-                if (gen4Members.length > 0) {
-                    const arrow3 = document.createElement('span');
-                    arrow3.className = 'arrow';
-                    arrow3.textContent = '→';
-                    lineContainer.appendChild(arrow3);
-
-                    // 4. GREAT-GRANDCHILDREN (Gen 4)
-                    const gen4Column = document.createElement('div');
-                    gen4Column.className = 'person-column';
-                    gen4Members.forEach(person => {
-                        const box = document.createElement('div');
-                        box.className = `person-box ${rootFamily.line}`;
-                        box.textContent = person.name;
-                        gen4Column.appendChild(box);
-                    });
-                    lineContainer.appendChild(gen4Column);
-                }
-
-                // Arrow and Gen 5 if exists
-                const gen5Members = getAllMembers().filter(p => p.line === rootFamily.line && p.generation === 5);
-                if (gen5Members.length > 0) {
-                    const arrow4 = document.createElement('span');
-                    arrow4.className = 'arrow';
-                    arrow4.textContent = '→';
-                    lineContainer.appendChild(arrow4);
-
-                    const gen5Column = document.createElement('div');
-                    gen5Column.className = 'person-column';
-                    gen5Members.forEach(person => {
-                        const box = document.createElement('div');
-                        box.className = `person-box ${rootFamily.line}`;
-                        box.textContent = person.name;
-                        gen5Column.appendChild(box);
-                    });
-                    lineContainer.appendChild(gen5Column);
-                }
-
-                row.appendChild(lineContainer);
-                container.appendChild(row);
+                container.appendChild(treeContainer);
             });
+        }
+
+        // Recursively render tree nodes
+        function renderTreeNode(personId, line) {
+            const person = getAllMembers().find(p => p.id === personId);
+            if (!person) return document.createElement('div');
+
+            const node = document.createElement('div');
+            node.className = 'tree-node';
+
+            // Person box
+            const personBox = document.createElement('div');
+            personBox.className = person.generation === 1 ? `tree-person root-person ${line}` : `tree-person ${line}`;
+            personBox.textContent = person.name;
+            node.appendChild(personBox);
+
+            // Get children
+            const children = person.children ? person.children.map(childId =>
+                getAllMembers().find(p => p.id === childId)
+            ).filter(Boolean) : [];
+
+            if (children.length > 0) {
+                // Add vertical connector line
+                const vLine = document.createElement('div');
+                vLine.className = 'v-line';
+                node.appendChild(vLine);
+
+                // Children container
+                const childrenContainer = document.createElement('div');
+                childrenContainer.className = 'tree-children';
+
+                // Add horizontal line if multiple children
+                if (children.length > 1) {
+                    const hLine = document.createElement('div');
+                    hLine.className = 'h-line';
+                    childrenContainer.appendChild(hLine);
+                }
+
+                // Render each child recursively
+                children.forEach(child => {
+                    const childNode = renderTreeNode(child.id, line);
+                    childrenContainer.appendChild(childNode);
+                });
+
+                node.appendChild(childrenContainer);
+            }
+
+            return node;
         }
 
         // Render family tree
