@@ -922,6 +922,71 @@
             transform: scale(0.95);
         }
 
+        /* Compact List View */
+        .compact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .compact-generation {
+            margin-bottom: 40px;
+        }
+
+        .compact-gen-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #333;
+        }
+
+        .compact-family-line {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .compact-line-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .compact-line-header.pete { background-color: var(--pete); }
+        .compact-line-header.herman { background-color: var(--herman); }
+        .compact-line-header.doerksen { background-color: var(--doerksen); }
+        .compact-line-header.ruth { background-color: var(--ruth); }
+        .compact-line-header.ivan { background-color: var(--ivan); }
+
+        .compact-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+            padding: 10px;
+        }
+
+        .compact-member {
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #333;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #ddd;
+        }
+
+        .compact-member.pete { border-left-color: var(--pete); }
+        .compact-member.herman { border-left-color: var(--herman); }
+        .compact-member.doerksen { border-left-color: var(--doerksen); }
+        .compact-member.ruth { border-left-color: var(--ruth); }
+        .compact-member.ivan { border-left-color: var(--ivan); }
+
         /* Footer */
         footer {
             text-align: center;
@@ -1148,31 +1213,33 @@
             <!-- Datalist for autocomplete -->
             <datalist id="familyNames"></datalist>
 
-            <!-- View Mode Switcher -->
+            <!-- View Selector - Different visualizations of the family tree -->
+            <div style="text-align: center; margin-bottom: 10px;">
+                <strong style="color: #666; font-size: 14px;">View Selector - Choose your preferred view:</strong>
+            </div>
             <div class="map-view-switcher">
-                <button class="view-button active" onclick="switchMapView('treeoflife')" id="viewBtn-treeoflife">
-                    🌳 Tree of Life
+                <button class="view-button active" onclick="switchMapView('traditional')" id="viewBtn-traditional">
+                    📋 Traditional
                 </button>
                 <button class="view-button" onclick="switchMapView('chronos')" id="viewBtn-chronos">
                     📊 Chronos
                 </button>
-                <button class="view-button" onclick="switchMapView('traditional')" id="viewBtn-traditional">
-                    📋 Traditional
+                <button class="view-button" onclick="switchMapView('treeoflife')" id="viewBtn-treeoflife">
+                    🌳 Tree of Life
                 </button>
                 <button class="view-button" onclick="switchMapView('royal')" id="viewBtn-royal">
                     👑 Royal Dynasty
                 </button>
+                <button class="view-button" onclick="switchMapView('compact')" id="viewBtn-compact">
+                    📑 Compact List
+                </button>
             </div>
 
-            <!-- Tree of Life View -->
-            <div id="treeOfLifeView" class="map-view active">
-                <div class="tree-controls">
-                    <button onclick="zoomIn()" class="zoom-button">+</button>
-                    <button onclick="zoomOut()" class="zoom-button">−</button>
-                    <button onclick="resetZoom()" class="zoom-button">⟲ Reset</button>
-                </div>
-                <div id="treeOfLifeContainer" class="radial-tree-container">
-                    <!-- SVG will be generated here -->
+            <!-- Traditional Tree View -->
+            <div id="traditionalView" class="map-view active">
+                <button class="print-button" onclick="window.print()">🖨️ Print Family Map</button>
+                <div id="traditionalContainer" class="family-map-container">
+                    <!-- Traditional tree will be generated here -->
                 </div>
             </div>
 
@@ -1184,11 +1251,15 @@
                 </div>
             </div>
 
-            <!-- Traditional Tree View -->
-            <div id="traditionalView" class="map-view">
-                <button class="print-button" onclick="window.print()">🖨️ Print Family Map</button>
-                <div id="traditionalContainer" class="family-map-container">
-                    <!-- Traditional tree will be generated here -->
+            <!-- Tree of Life View -->
+            <div id="treeOfLifeView" class="map-view">
+                <div class="tree-controls">
+                    <button onclick="zoomIn()" class="zoom-button">+</button>
+                    <button onclick="zoomOut()" class="zoom-button">−</button>
+                    <button onclick="resetZoom()" class="zoom-button">⟲ Reset</button>
+                </div>
+                <div id="treeOfLifeContainer" class="radial-tree-container">
+                    <!-- SVG will be generated here -->
                 </div>
             </div>
 
@@ -1196,6 +1267,13 @@
             <div id="royalView" class="map-view">
                 <div id="royalContainer" class="royal-container">
                     <!-- Royal dynasty cards will be generated here -->
+                </div>
+            </div>
+
+            <!-- Compact List View -->
+            <div id="compactView" class="map-view">
+                <div id="compactContainer" class="compact-container">
+                    <!-- Compact list will be generated here -->
                 </div>
             </div>
         </div>
@@ -1298,21 +1376,21 @@
         const familyData = {
             gen1: [
                 {
-                    id: 'herman-sarah',
-                    name: 'Herman & Sarah Regier',
-                    parents: null,
-                    children: ['dale-teresa', 'marilyn-craig', 'leon-marilyn', 'larry-kristi', 'karen-terry'],
-                    generation: 1,
-                    line: 'herman',
-                    location: ''
-                },
-                {
                     id: 'pete-rachel',
                     name: 'Pete & Rachel Regier',
                     parents: null,
                     children: ['james-joyce', 'gaylend-marcia', 'phillip-cindy', 'carol', 'ronald-lorie', 'donald-lisa'],
                     generation: 1,
                     line: 'pete',
+                    location: ''
+                },
+                {
+                    id: 'herman-sarah',
+                    name: 'Herman & Sarah Regier',
+                    parents: null,
+                    children: ['dale-teresa', 'marilyn-craig', 'leon-marilyn', 'larry-kristi', 'karen-terry'],
+                    generation: 1,
+                    line: 'herman',
                     location: ''
                 },
                 {
@@ -3794,7 +3872,7 @@
 
         // Render Family Map (Horizontal Flowchart)
         // Map view state
-        let currentMapView = 'treeoflife';
+        let currentMapView = 'traditional';
         let currentZoom = 1;
         let chronosPath = [];
 
@@ -3819,6 +3897,8 @@
                 renderTraditionalMap();
             } else if (viewName === 'royal') {
                 renderRoyalDynasty();
+            } else if (viewName === 'compact') {
+                renderCompactList();
             }
 
             // Save preference
@@ -3976,12 +4056,10 @@
             const container = document.getElementById('traditionalContainer');
             container.innerHTML = '';
 
-            // Define the 7 family lines (root couples in Gen 1)
+            // Define the 7 family lines (root couples in Gen 1) - Oldest to youngest
             const familyLines = [
-                { id: 'herman-sarah', name: 'Herman & Sarah Regier', line: 'herman' },
                 { id: 'pete-rachel', name: 'Pete & Rachel Regier', line: 'pete' },
-                { id: 'ronald-lorie', name: 'Ronald & Lorie', line: 'ronald' },
-                { id: 'donald-lisa', name: 'Donald & Lisa', line: 'donald' },
+                { id: 'herman-sarah', name: 'Herman & Sarah Regier', line: 'herman' },
                 { id: 'marion-harold', name: 'Marion & Harold Doerksen', line: 'doerksen' },
                 { id: 'ruth-curtis', name: 'Ruth & Curtis Preheim', line: 'ruth' },
                 { id: 'ivan-ann', name: 'Ivan & Ann', line: 'ivan' }
@@ -4055,12 +4133,10 @@
             const container = document.getElementById('royalContainer');
             container.innerHTML = '';
 
-            // Define the 7 royal houses (family lines)
+            // Define the 5 royal houses (family lines) - Oldest to Youngest
             const royalHouses = [
-                { id: 'herman-sarah', name: 'House of Herman & Sarah', line: 'herman', motto: 'First Among Equals' },
                 { id: 'pete-rachel', name: 'House of Pete & Rachel', line: 'pete', motto: 'Steadfast and True' },
-                { id: 'ronald-lorie', name: 'House of Ronald & Lorie', line: 'ronald', motto: 'United in Strength' },
-                { id: 'donald-lisa', name: 'House of Donald & Lisa', line: 'donald', motto: 'Bold and Faithful' },
+                { id: 'herman-sarah', name: 'House of Herman & Sarah', line: 'herman', motto: 'First Among Equals' },
                 { id: 'marion-harold', name: 'House of Marion & Harold', line: 'doerksen', motto: 'Heritage and Honor' },
                 { id: 'ruth-curtis', name: 'House of Ruth & Curtis', line: 'ruth', motto: 'Wisdom Through Ages' },
                 { id: 'ivan-ann', name: 'House of Ivan & Ann', line: 'ivan', motto: 'Legacy of Love' }
@@ -4177,6 +4253,79 @@
                 }
 
                 container.appendChild(houseDiv);
+            });
+        }
+
+        // Compact List View - All members organized by generation and family line
+        function renderCompactList() {
+            const container = document.getElementById('compactContainer');
+            container.innerHTML = '';
+
+            // Get all generations
+            const generations = {
+                'Generation 1': familyData.gen1,
+                'Generation 2': familyData.gen2,
+                'Generation 3': familyData.gen3,
+                'Generation 4': familyData.gen4,
+                'Generation 5': familyData.gen5
+            };
+
+            // Family line order: Pete, Herman, Marion, Ruth, Ivan
+            const lineOrder = ['pete', 'herman', 'doerksen', 'ruth', 'ivan'];
+            const lineNames = {
+                'pete': 'Pete & Rachel',
+                'herman': 'Herman & Sarah',
+                'doerksen': 'Marion & Harold',
+                'ruth': 'Ruth & Curtis',
+                'ivan': 'Ivan & Ann'
+            };
+
+            Object.keys(generations).forEach(genName => {
+                const genData = generations[genName];
+                if (!genData || genData.length === 0) return;
+
+                const genDiv = document.createElement('div');
+                genDiv.className = 'compact-generation';
+
+                const genHeader = document.createElement('div');
+                genHeader.className = 'compact-gen-header';
+                genHeader.textContent = genName;
+                genDiv.appendChild(genHeader);
+
+                // Group members by family line
+                const membersByLine = {};
+                lineOrder.forEach(line => {
+                    membersByLine[line] = genData.filter(m => m.line === line);
+                });
+
+                // Render each family line
+                lineOrder.forEach(line => {
+                    const members = membersByLine[line];
+                    if (!members || members.length === 0) return;
+
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'compact-family-line';
+
+                    const lineHeader = document.createElement('div');
+                    lineHeader.className = `compact-line-header ${line}`;
+                    lineHeader.textContent = lineNames[line];
+                    lineDiv.appendChild(lineHeader);
+
+                    const membersGrid = document.createElement('div');
+                    membersGrid.className = 'compact-members';
+
+                    members.forEach(member => {
+                        const memberDiv = document.createElement('div');
+                        memberDiv.className = `compact-member ${line}`;
+                        memberDiv.textContent = member.name;
+                        membersGrid.appendChild(memberDiv);
+                    });
+
+                    lineDiv.appendChild(membersGrid);
+                    genDiv.appendChild(lineDiv);
+                });
+
+                container.appendChild(genDiv);
             });
         }
 
