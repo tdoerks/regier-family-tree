@@ -466,6 +466,75 @@
             background: #e67a32;
         }
 
+        /* Map Search Tools */
+        .map-search-tools {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .search-tool {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-tool:last-child {
+            margin-bottom: 0;
+        }
+
+        .search-tool label {
+            font-weight: 600;
+            color: var(--text-dark);
+            min-width: 150px;
+        }
+
+        .search-tool input {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 180px;
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .search-tool input:focus {
+            outline: none;
+            border-color: var(--doerksen);
+        }
+
+        .search-btn, .clear-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-btn {
+            background: var(--doerksen);
+            color: white;
+        }
+
+        .search-btn:hover {
+            background: #e67a32;
+        }
+
+        .clear-btn {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .clear-btn:hover {
+            background: #ccc;
+        }
+
         /* Map View Switcher */
         .map-view-switcher {
             display: flex;
@@ -677,6 +746,7 @@
         }
 
         @media (max-width: 768px) {
+            /* Mobile/Tablet Responsive Design */
             .tree-children {
                 flex-direction: column;
                 gap: 5px;
@@ -694,6 +764,64 @@
             .tree-children > .tree-node:first-child::before,
             .tree-children > .tree-node:last-child::after {
                 display: none;
+            }
+
+            /* Search tools responsive */
+            .map-search-tools {
+                padding: 15px;
+            }
+
+            .search-tool {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-tool label {
+                min-width: auto;
+            }
+
+            .search-tool input {
+                max-width: none;
+                width: 100%;
+            }
+
+            .search-tool button {
+                width: 100%;
+            }
+
+            /* View switcher responsive */
+            .map-view-switcher {
+                gap: 8px;
+            }
+
+            .view-button {
+                flex: 1;
+                min-width: 100px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            /* Chronos cards responsive */
+            .chronos-container {
+                grid-template-columns: 1fr;
+            }
+
+            /* Tree controls */
+            .tree-controls {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+
+            .zoom-button {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            /* Radial tree container */
+            .radial-tree-container {
+                height: 500px;
             }
         }
 
@@ -780,6 +908,26 @@
                 <h1 style="font-size: 2.5em; font-weight: bold; margin: 0; color: var(--text-dark);">FAMILY MAP</h1>
                 <p style="font-size: 1.1em; color: var(--text-light); margin: 10px 0 0 0;">Multiple Generations • All in One Family</p>
             </div>
+
+            <!-- Search Tools -->
+            <div class="map-search-tools">
+                <div class="search-tool">
+                    <label>🔍 Find Descendants:</label>
+                    <input type="text" id="descendantSearch" placeholder="Enter name..." list="familyNames">
+                    <button onclick="showDescendants()" class="search-btn">Show</button>
+                    <button onclick="clearSearch()" class="clear-btn">Clear</button>
+                </div>
+                <div class="search-tool">
+                    <label>🔗 Find Relationship:</label>
+                    <input type="text" id="person1Search" placeholder="Person 1..." list="familyNames">
+                    <span style="margin: 0 8px;">to</span>
+                    <input type="text" id="person2Search" placeholder="Person 2..." list="familyNames">
+                    <button onclick="showRelationship()" class="search-btn">Find Path</button>
+                </div>
+            </div>
+
+            <!-- Datalist for autocomplete -->
+            <datalist id="familyNames"></datalist>
 
             <!-- View Mode Switcher -->
             <div class="map-view-switcher">
@@ -1016,7 +1164,7 @@
                     id: 'ivan-ann',
                     name: 'Ivan & Ann',
                     parents: null,
-                    children: ['mark-marlene', 'michael-mateo'],
+                    children: ['mark-marlene', 'michael-ivan'],
                     generation: 1,
                     line: 'ivan',
                     location: ''
@@ -1291,13 +1439,13 @@
                     children: []
                 },
                 {
-                    id: 'michael-mateo',
-                    name: 'Michael & Mateo',
+                    id: 'michael-ivan',
+                    name: 'Michael',
                     parents: 'ivan-ann',
                     generation: 2,
                     line: 'ivan',
                     location: '',
-                    children: []
+                    children: ['mateo']
                 }
             ],
 
@@ -1955,6 +2103,17 @@
                     parents: 'aiden-dorcas',
                     generation: 3,
                     line: 'ruth',
+                    location: '',
+                    children: []
+                },
+
+                // Michael's children (Ivan line)
+                {
+                    id: 'mateo',
+                    name: 'Mateo',
+                    parents: 'michael-ivan',
+                    generation: 3,
+                    line: 'ivan',
                     location: '',
                     children: []
                 }
@@ -3268,9 +3427,148 @@
 
         // Main render function - called on init
         function renderFamilyMap() {
+            // Populate autocomplete datalist
+            populateFamilyNames();
+
             // Check for saved preference
             const savedView = localStorage.getItem('preferredMapView') || 'treeoflife';
             switchMapView(savedView);
+        }
+
+        // Populate family names for autocomplete
+        function populateFamilyNames() {
+            const datalist = document.getElementById('familyNames');
+            datalist.innerHTML = '';
+
+            getAllMembers().forEach(person => {
+                const option = document.createElement('option');
+                option.value = person.name;
+                datalist.appendChild(option);
+            });
+        }
+
+        // Show descendants of a person
+        function showDescendants() {
+            const searchInput = document.getElementById('descendantSearch').value.trim();
+            if (!searchInput) {
+                alert('Please enter a name');
+                return;
+            }
+
+            const person = getAllMembers().find(p =>
+                p.name.toLowerCase() === searchInput.toLowerCase()
+            );
+
+            if (!person) {
+                alert(`Could not find "${searchInput}". Please check spelling and try again.`);
+                return;
+            }
+
+            // Switch to Chronos view and navigate to that person
+            switchMapView('chronos');
+            chronosPath = [];
+            renderChronos(person.id);
+        }
+
+        // Find relationship path between two people
+        function showRelationship() {
+            const person1Name = document.getElementById('person1Search').value.trim();
+            const person2Name = document.getElementById('person2Search').value.trim();
+
+            if (!person1Name || !person2Name) {
+                alert('Please enter both names');
+                return;
+            }
+
+            const person1 = getAllMembers().find(p =>
+                p.name.toLowerCase() === person1Name.toLowerCase()
+            );
+            const person2 = getAllMembers().find(p =>
+                p.name.toLowerCase() === person2Name.toLowerCase()
+            );
+
+            if (!person1 || !person2) {
+                alert('Could not find one or both people. Please check spelling and try again.');
+                return;
+            }
+
+            // Find path between them
+            const path = findRelationshipPath(person1, person2);
+
+            if (!path) {
+                alert(`No relationship path found between ${person1.name} and ${person2.name}`);
+                return;
+            }
+
+            // Display the path
+            displayRelationshipPath(path);
+        }
+
+        // Find shortest path between two people using BFS
+        function findRelationshipPath(person1, person2) {
+            if (person1.id === person2.id) return [person1];
+
+            const queue = [[person1]];
+            const visited = new Set([person1.id]);
+
+            while (queue.length > 0) {
+                const path = queue.shift();
+                const current = path[path.length - 1];
+
+                // Get all connected people (parents and children)
+                const connections = [];
+
+                // Add parents
+                if (current.parents) {
+                    const parent = getAllMembers().find(p => p.id === current.parents);
+                    if (parent) connections.push(parent);
+                }
+
+                // Add children
+                if (current.children) {
+                    current.children.forEach(childId => {
+                        const child = getAllMembers().find(p => p.id === childId);
+                        if (child) connections.push(child);
+                    });
+                }
+
+                for (const connection of connections) {
+                    if (connection.id === person2.id) {
+                        return [...path, connection];
+                    }
+
+                    if (!visited.has(connection.id)) {
+                        visited.add(connection.id);
+                        queue.push([...path, connection]);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // Display relationship path
+        function displayRelationshipPath(path) {
+            const pathNames = path.map(p => p.name).join(' → ');
+            const generations = path[path.length - 1].generation - path[0].generation;
+            const generationText = Math.abs(generations) === 1 ?
+                `${Math.abs(generations)} generation` :
+                `${Math.abs(generations)} generations`;
+
+            alert(`Relationship Path:\n\n${pathNames}\n\nDistance: ${path.length - 1} ${path.length - 1 === 1 ? 'step' : 'steps'}\nGeneration difference: ${generationText}`);
+
+            // Switch to Chronos view and show the first person
+            switchMapView('chronos');
+            chronosPath = [];
+            renderChronos(path[0].id);
+        }
+
+        // Clear search
+        function clearSearch() {
+            document.getElementById('descendantSearch').value = '';
+            document.getElementById('person1Search').value = '';
+            document.getElementById('person2Search').value = '';
+            renderFamilyMap();
         }
 
         // Traditional view - Compact list format
