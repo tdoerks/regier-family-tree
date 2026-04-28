@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Tree trunk -->
+  <rect x="42" y="60" width="16" height="30" fill="#8B4513"/>
+
+  <!-- Tree foliage - 3 layers -->
+  <circle cx="50" cy="30" r="25" fill="#2D5016"/>
+  <circle cx="35" cy="45" r="20" fill="#3A6B1E"/>
+  <circle cx="65" cy="45" r="20" fill="#3A6B1E"/>
+
+  <!-- Highlight -->
+  <circle cx="40" cy="25" r="8" fill="#4A8F2A" opacity="0.6"/>
+</svg>

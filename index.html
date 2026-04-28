@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Regier Family Tree - Interactive Reunion Tool</title>
-    <meta name="description" content="Interactive family tree for the Regier family spanning 4 generations">
+    <meta name="description" content="Interactive family tree for the Regier family spanning 5 generations">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <style>
         * {
@@ -1192,6 +1193,33 @@
             <div style="text-align: center; margin-bottom: 20px;">
                 <h1 style="font-size: 2.5em; font-weight: bold; margin: 0; color: var(--text-dark);">FAMILY MAP</h1>
                 <p style="font-size: 1.1em; color: var(--text-light); margin: 10px 0 0 0;">Multiple Generations • All in One Family</p>
+            </div>
+
+            <!-- Color Legend -->
+            <div style="text-align: center; margin: 20px auto; padding: 15px; background: white; border-radius: 8px; max-width: 800px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <strong style="font-size: 16px; margin-bottom: 10px; display: block;">Family Line Colors</strong>
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--pete); border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
+                        <span style="font-size: 14px;">Pete & Rachel</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--herman); border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
+                        <span style="font-size: 14px;">Herman & Sarah</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--doerksen); border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
+                        <span style="font-size: 14px;">Marion & Harold</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--ruth); border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
+                        <span style="font-size: 14px;">Ruth & Curtis</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--ivan); border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
+                        <span style="font-size: 14px;">Ivan & Ann</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Search Tools -->
@@ -4434,16 +4462,36 @@
             g.setAttribute('transform', `translate(${centerX}, ${centerY}) scale(${currentZoom})`);
             svg.appendChild(g);
 
-            // Add a test circle at center to verify SVG is visible
+            // Add test shapes to verify SVG is visible
+            const testRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            testRect.setAttribute('x', -100);
+            testRect.setAttribute('y', -100);
+            testRect.setAttribute('width', 200);
+            testRect.setAttribute('height', 200);
+            testRect.setAttribute('fill', 'blue');
+            testRect.setAttribute('opacity', '0.3');
+            g.appendChild(testRect);
+
             const testCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             testCircle.setAttribute('cx', 0);
             testCircle.setAttribute('cy', 0);
-            testCircle.setAttribute('r', 30);
+            testCircle.setAttribute('r', 50);
             testCircle.setAttribute('fill', 'red');
             testCircle.setAttribute('stroke', 'black');
-            testCircle.setAttribute('stroke-width', '3');
+            testCircle.setAttribute('stroke-width', '5');
             g.appendChild(testCircle);
-            console.log('Tree of Life: Added test circle at center (0,0) - should be visible at', centerX, centerY);
+
+            const testText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            testText.setAttribute('x', 0);
+            testText.setAttribute('y', 0);
+            testText.setAttribute('text-anchor', 'middle');
+            testText.setAttribute('font-size', '24');
+            testText.setAttribute('fill', 'white');
+            testText.setAttribute('font-weight', 'bold');
+            testText.textContent = 'CENTER';
+            g.appendChild(testText);
+
+            console.log('Tree of Life: Added test shapes at center (0,0) - should be visible at', centerX, centerY);
 
             // Get root families
             const rootFamilies = familyData.gen1;
