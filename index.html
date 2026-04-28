@@ -867,6 +867,31 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
+        .royal-sibling-group {
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.05);
+            border-left: 3px solid #d4af37;
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .royal-parent-label {
+            grid-column: 1 / -1;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8b7355;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: rgba(139, 115, 85, 0.1);
+            border-radius: 6px;
+            text-align: center;
+        }
+
         /* Contact Developer Button */
         .contact-fab {
             position: fixed;
@@ -4089,31 +4114,61 @@
                         const membersGrid = document.createElement('div');
                         membersGrid.className = 'royal-members';
 
+                        // Group by parents for sibling relationships
+                        const byParents = {};
                         generations[gen].forEach(member => {
-                            const memberCard = document.createElement('div');
-                            memberCard.className = 'royal-member';
+                            const parentKey = member.parents || 'root';
+                            if (!byParents[parentKey]) byParents[parentKey] = [];
+                            byParents[parentKey].push(member);
+                        });
 
-                            const nameDiv = document.createElement('div');
-                            nameDiv.className = 'royal-member-name';
-                            nameDiv.textContent = member.name;
-                            memberCard.appendChild(nameDiv);
+                        // Render each family group
+                        Object.keys(byParents).forEach(parentKey => {
+                            const siblings = byParents[parentKey];
 
-                            if (member.location) {
-                                const locationDiv = document.createElement('div');
-                                locationDiv.className = 'royal-member-location';
-                                locationDiv.textContent = member.location;
-                                memberCard.appendChild(locationDiv);
+                            // Create sibling group container
+                            const siblingGroup = document.createElement('div');
+                            siblingGroup.className = 'royal-sibling-group';
+
+                            // Add parent label if not root
+                            if (parentKey !== 'root' && siblings.length > 0) {
+                                const parent = getAllMembers().find(p => p.id === parentKey);
+                                if (parent) {
+                                    const parentLabel = document.createElement('div');
+                                    parentLabel.className = 'royal-parent-label';
+                                    parentLabel.textContent = `Children of ${parent.name}`;
+                                    siblingGroup.appendChild(parentLabel);
+                                }
                             }
 
-                            const childCount = member.children ? member.children.length : 0;
-                            if (childCount > 0) {
-                                const badge = document.createElement('div');
-                                badge.className = 'royal-children-badge';
-                                badge.textContent = `${childCount} ${childCount === 1 ? 'heir' : 'heirs'}`;
-                                memberCard.appendChild(badge);
-                            }
+                            siblings.forEach(member => {
+                                const memberCard = document.createElement('div');
+                                memberCard.className = 'royal-member';
 
-                            membersGrid.appendChild(memberCard);
+                                const nameDiv = document.createElement('div');
+                                nameDiv.className = 'royal-member-name';
+                                nameDiv.textContent = member.name;
+                                memberCard.appendChild(nameDiv);
+
+                                if (member.location) {
+                                    const locationDiv = document.createElement('div');
+                                    locationDiv.className = 'royal-member-location';
+                                    locationDiv.textContent = member.location;
+                                    memberCard.appendChild(locationDiv);
+                                }
+
+                                const childCount = member.children ? member.children.length : 0;
+                                if (childCount > 0) {
+                                    const badge = document.createElement('div');
+                                    badge.className = 'royal-children-badge';
+                                    badge.textContent = `${childCount} ${childCount === 1 ? 'heir' : 'heirs'}`;
+                                    memberCard.appendChild(badge);
+                                }
+
+                                siblingGroup.appendChild(memberCard);
+                            });
+
+                            membersGrid.appendChild(siblingGroup);
                         });
 
                         genDiv.appendChild(membersGrid);
@@ -4135,7 +4190,11 @@
 
             container.innerHTML = '';
 
-            const width = container.clientWidth || 1000;
+            // Force width if container is not visible yet
+            let width = container.clientWidth;
+            if (width === 0 || !width) {
+                width = container.parentElement.clientWidth || 1000;
+            }
             const height = 800;
             const centerX = width / 2;
             const centerY = height / 2;
