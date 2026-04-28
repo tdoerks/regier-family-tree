@@ -707,7 +707,7 @@
                     id: 'herman-sarah',
                     name: 'Herman & Sarah Regier',
                     parents: null,
-                    children: ['dale-teresa', 'chris-raquel', 'marilyn-craig', 'leon-marilyn'],
+                    children: ['dale-teresa', 'marilyn-craig', 'leon-marilyn'],
                     generation: 1,
                     line: 'herman',
                     location: ''
@@ -760,16 +760,7 @@
                     generation: 2,
                     line: 'herman',
                     location: '',
-                    children: ['carlin-blake', 'jordan', 'sarah', 'allycia-ryan']
-                },
-                {
-                    id: 'chris-raquel',
-                    name: 'Chris & Raquel',
-                    parents: 'herman-sarah',
-                    generation: 2,
-                    line: 'herman',
-                    location: '',
-                    children: ['marcus-shay', 'michael-tasha']
+                    children: ['carlin-blake', 'jordan', 'sarah-dale']
                 },
                 {
                     id: 'marilyn-craig',
@@ -778,7 +769,7 @@
                     generation: 2,
                     line: 'herman',
                     location: '',
-                    children: []
+                    children: ['chris-raquel', 'marcus-shay', 'michael-nicole']
                 },
                 {
                     id: 'leon-marilyn',
@@ -988,12 +979,12 @@
                 // Dale & Teresa's children
                 {
                     id: 'carlin-blake',
-                    name: 'Carlin & Blake',
+                    name: 'Carlin & Blake Buhrman',
                     parents: 'dale-teresa',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['jonathan-dale']
+                    children: ['reece', 'landry', 'jonathan-dale']
                 },
                 {
                     id: 'jordan',
@@ -1005,7 +996,7 @@
                     children: []
                 },
                 {
-                    id: 'sarah',
+                    id: 'sarah-dale',
                     name: 'Sarah',
                     parents: 'dale-teresa',
                     generation: 3,
@@ -1013,34 +1004,34 @@
                     location: '',
                     children: []
                 },
+
+                // Marilyn & Craig King's children
                 {
-                    id: 'allycia-ryan',
-                    name: 'Allycia & Ryan Samuel, Sarah',
-                    parents: 'dale-teresa',
+                    id: 'chris-raquel',
+                    name: 'Chris & Raquel',
+                    parents: 'marilyn-craig',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: []
+                    children: ['caleb-chris', 'chantry', 'daniel-chris', 'samuel-chris', 'sarah-chris']
                 },
-
-                // Chris & Raquel's children
                 {
                     id: 'marcus-shay',
                     name: 'Marcus & Shay',
-                    parents: 'chris-raquel',
+                    parents: 'marilyn-craig',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['mary-hays']
+                    children: ['mary-marcus', 'hays']
                 },
                 {
-                    id: 'michael-tasha',
-                    name: 'Michael & Tasha',
-                    parents: 'chris-raquel',
+                    id: 'michael-nicole',
+                    name: 'Michael & Nicole',
+                    parents: 'marilyn-craig',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['reese-landry']
+                    children: ['benjamin-michael', 'jack', 'janie', 'emma']
                 },
 
                 // Leon / Marilyn's children
@@ -1438,6 +1429,22 @@
             gen4: [
                 // Carlin & Blake's children
                 {
+                    id: 'reece',
+                    name: 'Reece',
+                    parents: 'carlin-blake',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'landry',
+                    name: 'Landry',
+                    parents: 'carlin-blake',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
                     id: 'jonathan-dale',
                     name: 'Jonathan',
                     parents: 'carlin-blake',
@@ -1446,21 +1453,95 @@
                     location: ''
                 },
 
+                // Chris & Raquel's children
+                {
+                    id: 'caleb-chris',
+                    name: 'Caleb',
+                    parents: 'chris-raquel',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'chantry',
+                    name: 'Chantry',
+                    parents: 'chris-raquel',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'daniel-chris',
+                    name: 'Daniel',
+                    parents: 'chris-raquel',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'samuel-chris',
+                    name: 'Samuel',
+                    parents: 'chris-raquel',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'sarah-chris',
+                    name: 'Sarah',
+                    parents: 'chris-raquel',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+
                 // Marcus & Shay's children
                 {
-                    id: 'mary-hays',
-                    name: 'Mary, Hays',
+                    id: 'mary-marcus',
+                    name: 'Mary',
+                    parents: 'marcus-shay',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'hays',
+                    name: 'Hays',
                     parents: 'marcus-shay',
                     generation: 4,
                     line: 'herman',
                     location: ''
                 },
 
-                // Michael & Tasha's children
+                // Michael & Nicole's children
                 {
-                    id: 'reese-landry',
-                    name: 'Reese, Landry',
-                    parents: 'michael-tasha',
+                    id: 'benjamin-michael',
+                    name: 'Benjamin',
+                    parents: 'michael-nicole',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'jack',
+                    name: 'Jack',
+                    parents: 'michael-nicole',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'janie',
+                    name: 'Janie',
+                    parents: 'michael-nicole',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'emma',
+                    name: 'Emma',
+                    parents: 'michael-nicole',
                     generation: 4,
                     line: 'herman',
                     location: ''
