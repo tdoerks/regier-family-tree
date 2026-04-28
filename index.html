@@ -745,6 +745,182 @@
             font-weight: 600;
         }
 
+        /* Royal Dynasty View - Medieval Theme */
+        .royal-container {
+            padding: 20px;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            min-height: 600px;
+        }
+
+        .royal-house {
+            background: linear-gradient(135deg, #f4f1ea 0%, #e8e4d9 100%);
+            border: 4px solid #8b7355;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 40px rgba(139, 115, 85, 0.1);
+            position: relative;
+        }
+
+        .royal-house::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, gold, #d4af37, #c9a961);
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .royal-crest {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .royal-title {
+            font-family: 'Georgia', serif;
+            font-size: 32px;
+            font-weight: bold;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .royal-subtitle {
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            color: #f4f1ea;
+            margin-top: 8px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .royal-generation {
+            margin: 25px 0;
+        }
+
+        .royal-gen-header {
+            font-family: 'Georgia', serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #8b7355;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            border-radius: 4px;
+        }
+
+        .royal-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-left: 20px;
+        }
+
+        .royal-member {
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .royal-member:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+            border-color: #c9a961;
+        }
+
+        .royal-member-name {
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c1810;
+            margin-bottom: 8px;
+        }
+
+        .royal-member-location {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .royal-children-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contact Developer Button */
+        .contact-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--doerksen), #ff6b2b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 140, 66, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-fab:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.6);
+        }
+
+        .contact-fab:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+            border-top: 2px solid #e0e0e0;
+            color: var(--text-light);
+        }
+
+        footer p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--doerksen);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             /* Mobile/Tablet Responsive Design */
             .tree-children {
@@ -823,10 +999,29 @@
             .radial-tree-container {
                 height: 500px;
             }
+
+            /* Contact button responsive */
+            .contact-fab {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            /* Royal members grid responsive */
+            .royal-members {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                font-size: 12px;
+                padding: 30px 15px 15px;
+            }
         }
 
         @media print {
-            .tabs, .search-bar, .filters, .print-button, header {
+            .tabs, .search-bar, .filters, .print-button, header, .contact-fab, footer {
                 display: none;
             }
 
@@ -894,7 +1089,6 @@
         <!-- Navigation Tabs -->
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('map')">🗺️ Family Map</button>
-            <button class="tab-button" onclick="showTab('tree')">🌳 Family Tree</button>
             <button class="tab-button" onclick="showTab('stats')">📊 Statistics</button>
             <button class="tab-button" onclick="showTab('bingo')">🎮 Family Bingo</button>
             <button class="tab-button" onclick="showTab('passport')">📖 Reunion Passport</button>
@@ -940,6 +1134,9 @@
                 <button class="view-button" onclick="switchMapView('traditional')" id="viewBtn-traditional">
                     📋 Traditional
                 </button>
+                <button class="view-button" onclick="switchMapView('royal')" id="viewBtn-royal">
+                    👑 Royal Dynasty
+                </button>
             </div>
 
             <!-- Tree of Life View -->
@@ -969,72 +1166,12 @@
                     <!-- Traditional tree will be generated here -->
                 </div>
             </div>
-        </div>
 
-        <!-- Family Tree Tab -->
-        <div class="tab-content" id="treeTab">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="🔍 Search family by name..." oninput="searchFamily()">
-            </div>
-
-            <div class="filters">
-                <div class="filter-group">
-                    <label>Family Line</label>
-                    <select id="lineFilter" onchange="filterFamily()">
-                        <option value="all">All Families</option>
-                        <option value="herman">Herman & Sarah</option>
-                        <option value="pete">Pete & Rachel</option>
-                        <option value="doerksen">Marion & Harold / Doerksen</option>
-                        <option value="ruth">Ruth & Curtis</option>
-                        <option value="ivan">Ivan & Ann</option>
-                    </select>
+            <!-- Royal Dynasty View -->
+            <div id="royalView" class="map-view">
+                <div id="royalContainer" class="royal-container">
+                    <!-- Royal dynasty cards will be generated here -->
                 </div>
-
-                <div class="filter-group">
-                    <label>Location</label>
-                    <select id="locationFilter" onchange="filterFamily()">
-                        <option value="all">All Locations</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Generation</label>
-                    <select id="genFilter" onchange="filterFamily()">
-                        <option value="all">All Generations</option>
-                        <option value="1">Gen 1 (Root Couples)</option>
-                        <option value="2">Gen 2 (Children)</option>
-                        <option value="3">Gen 3 (Grandchildren)</option>
-                        <option value="4">Gen 4 (Great-Grandchildren)</option>
-                        <option value="5">Gen 5 (Great-Great-Grandchildren)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--herman)"></div>
-                    <span>Herman & Sarah</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--pete)"></div>
-                    <span>Pete & Rachel</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--doerksen)"></div>
-                    <span>Marion & Harold</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--ruth)"></div>
-                    <span>Ruth & Curtis</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--ivan)"></div>
-                    <span>Ivan & Ann</span>
-                </div>
-            </div>
-
-            <div id="familyTreeContainer" class="family-tree">
-                <!-- Family tree will be dynamically generated here -->
             </div>
         </div>
 
@@ -1080,7 +1217,18 @@
                 <!-- Table will be generated here -->
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built with love for the Regier Family Reunion</p>
+            <p>Have suggestions, corrections, or feedback? <a href="javascript:void(0)" onclick="contactDeveloper()">Contact the Developer</a></p>
+        </footer>
     </div>
+
+    <!-- Floating Contact Button -->
+    <button class="contact-fab" onclick="contactDeveloper()" title="Contact Developer">
+        💬
+    </button>
 
     <script>
         // Password protection
@@ -3419,6 +3567,8 @@
                 renderChronos();
             } else if (viewName === 'traditional') {
                 renderTraditionalMap();
+            } else if (viewName === 'royal') {
+                renderRoyalDynasty();
             }
 
             // Save preference
@@ -3648,6 +3798,106 @@
             });
 
             container.appendChild(list);
+        }
+
+        // Royal Dynasty View - Medieval themed family display
+        function renderRoyalDynasty() {
+            const container = document.getElementById('royalContainer');
+            container.innerHTML = '';
+
+            // Define the 7 royal houses (family lines)
+            const royalHouses = [
+                { id: 'herman-sarah', name: 'House of Herman & Sarah', line: 'herman', motto: 'First Among Equals' },
+                { id: 'pete-rachel', name: 'House of Pete & Rachel', line: 'pete', motto: 'Steadfast and True' },
+                { id: 'ronald-lorie', name: 'House of Ronald & Lorie', line: 'ronald', motto: 'United in Strength' },
+                { id: 'donald-lisa', name: 'House of Donald & Lisa', line: 'donald', motto: 'Bold and Faithful' },
+                { id: 'marion-harold', name: 'House of Marion & Harold', line: 'doerksen', motto: 'Heritage and Honor' },
+                { id: 'ruth-curtis', name: 'House of Ruth & Curtis', line: 'ruth', motto: 'Wisdom Through Ages' },
+                { id: 'ivan-ann', name: 'House of Ivan & Ann', line: 'ivan', motto: 'Legacy of Love' }
+            ];
+
+            royalHouses.forEach(house => {
+                const houseDiv = document.createElement('div');
+                houseDiv.className = `royal-house ${house.line}`;
+
+                // Crest header
+                const crest = document.createElement('div');
+                crest.className = 'royal-crest';
+                crest.innerHTML = `
+                    <div class="royal-title">👑 ${house.name}</div>
+                    <div class="royal-subtitle">"${house.motto}"</div>
+                `;
+                houseDiv.appendChild(crest);
+
+                // Get all descendants by generation
+                const rootPerson = getAllMembers().find(p => p.id === house.id);
+                if (rootPerson) {
+                    const generations = {};
+
+                    // Collect all descendants organized by generation
+                    function collectDescendants(person) {
+                        const gen = person.generation;
+                        if (!generations[gen]) generations[gen] = [];
+                        generations[gen].push(person);
+
+                        if (person.children) {
+                            person.children.forEach(childId => {
+                                const child = getAllMembers().find(p => p.id === childId);
+                                if (child) collectDescendants(child);
+                            });
+                        }
+                    }
+
+                    collectDescendants(rootPerson);
+
+                    // Render each generation
+                    Object.keys(generations).sort().forEach(gen => {
+                        const genDiv = document.createElement('div');
+                        genDiv.className = 'royal-generation';
+
+                        const genHeader = document.createElement('div');
+                        genHeader.className = 'royal-gen-header';
+                        const genNames = ['Founders', 'Second Generation', 'Third Generation', 'Fourth Generation', 'Fifth Generation'];
+                        genHeader.textContent = genNames[parseInt(gen) - 1] || `Generation ${gen}`;
+                        genDiv.appendChild(genHeader);
+
+                        const membersGrid = document.createElement('div');
+                        membersGrid.className = 'royal-members';
+
+                        generations[gen].forEach(member => {
+                            const memberCard = document.createElement('div');
+                            memberCard.className = 'royal-member';
+
+                            const nameDiv = document.createElement('div');
+                            nameDiv.className = 'royal-member-name';
+                            nameDiv.textContent = member.name;
+                            memberCard.appendChild(nameDiv);
+
+                            if (member.location) {
+                                const locationDiv = document.createElement('div');
+                                locationDiv.className = 'royal-member-location';
+                                locationDiv.textContent = member.location;
+                                memberCard.appendChild(locationDiv);
+                            }
+
+                            const childCount = member.children ? member.children.length : 0;
+                            if (childCount > 0) {
+                                const badge = document.createElement('div');
+                                badge.className = 'royal-children-badge';
+                                badge.textContent = `${childCount} ${childCount === 1 ? 'heir' : 'heirs'}`;
+                                memberCard.appendChild(badge);
+                            }
+
+                            membersGrid.appendChild(memberCard);
+                        });
+
+                        genDiv.appendChild(membersGrid);
+                        houseDiv.appendChild(genDiv);
+                    });
+                }
+
+                container.appendChild(houseDiv);
+            });
         }
 
         // Tree of Life - Radial view with zoom/pan
@@ -4529,6 +4779,24 @@
                 localStorage.removeItem(`quiz-${i}`);
             }
             generateQuiz();
+        }
+
+        // Contact Developer function
+        function contactDeveloper() {
+            const message = `Thank you for wanting to reach out!
+
+You can contact Tyler Doerksen for:
+• Family data corrections or updates
+• Feature suggestions
+• Bug reports
+• General feedback
+
+Please send an email to: tyler.doerksen@example.com
+(Or contact through your preferred family communication channel)
+
+What would you like to share?`;
+
+            alert(message);
         }
 
         // Initialize app
