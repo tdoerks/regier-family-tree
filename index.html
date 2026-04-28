@@ -3653,12 +3653,19 @@
         // Tree of Life - Radial view with zoom/pan
         function renderTreeOfLife() {
             const container = document.getElementById('treeOfLifeContainer');
+            if (!container) {
+                console.error('Tree of Life container not found');
+                return;
+            }
+
             container.innerHTML = '';
 
-            const width = container.clientWidth;
+            const width = container.clientWidth || 1000;
             const height = 800;
             const centerX = width / 2;
             const centerY = height / 2;
+
+            console.log('Rendering Tree of Life', { width, height, rootCount: familyData.gen1.length });
 
             // Create SVG
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
