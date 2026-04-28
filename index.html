@@ -30,6 +30,54 @@
             --border: #ddd;
         }
 
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-light: #1a1a1a;
+            --bg-white: #2d2d2d;
+            --text-dark: #e0e0e0;
+            --text-light: #b0b0b0;
+            --border: #444;
+        }
+
+        body.dark-mode .person-modal-content {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .person-modal-close {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .person-modal-close:hover {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode button {
+            background: #3a3a3a;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        body.dark-mode .tab-button {
+            background: #3a3a3a;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .tab-button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        body.dark-mode .stat-card,
+        body.dark-mode .bingo-cell,
+        body.dark-mode .passport-line,
+        body.dark-mode .compact-family-line {
+            background: #2d2d2d;
+            border-color: #444;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-light);
@@ -980,6 +1028,20 @@
             background: #f8f9fa;
             border-radius: 4px;
             border-left: 3px solid #ddd;
+            position: relative;
+        }
+
+        .birth-order-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-right: 6px;
+            min-width: 18px;
+            text-align: center;
         }
 
         .compact-member.pete { border-left-color: var(--pete); }
@@ -1258,7 +1320,10 @@
     <div class="container" id="mainContent" style="display: none;">
         <header>
             <h1>🌳 Regier Family Tree</h1>
-            <p>Interactive Reunion Tool - Four Generations of Family</p>
+            <p>Interactive Reunion Tool - Five Generations of Family</p>
+            <button onclick="toggleDarkMode()" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                <span id="darkModeIcon">🌙</span> <span id="darkModeText">Dark Mode</span>
+            </button>
         </header>
 
         <!-- Navigation Tabs -->
@@ -1304,14 +1369,6 @@
                         <span style="font-size: 14px;">Ivan & Ann</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Find Me Feature -->
-            <div style="text-align: center; margin: 15px auto; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; max-width: 600px;">
-                <label style="color: white; font-weight: bold; font-size: 16px; margin-right: 10px;">👤 Find Me:</label>
-                <input type="text" id="findMeSearch" placeholder="Type your name..." list="familyNames" style="padding: 8px 12px; font-size: 14px; border: none; border-radius: 6px; width: 300px; max-width: 60%;">
-                <button onclick="highlightMyBranch()" style="padding: 8px 16px; margin-left: 10px; background: white; color: #667eea; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Highlight My Branch</button>
-                <button onclick="clearHighlight()" style="padding: 8px 16px; margin-left: 5px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 6px; cursor: pointer;">Clear</button>
             </div>
 
             <!-- Search Tools -->
@@ -4503,10 +4560,18 @@
                     const membersGrid = document.createElement('div');
                     membersGrid.className = 'compact-members';
 
-                    members.forEach(member => {
+                    members.forEach((member, index) => {
                         const memberDiv = document.createElement('div');
                         memberDiv.className = `compact-member ${line} clickable-name`;
-                        memberDiv.textContent = member.name;
+
+                        // Add birth order badge
+                        const badge = document.createElement('span');
+                        badge.className = 'birth-order-badge';
+                        badge.textContent = index + 1;
+                        badge.title = `${index + 1}${getOrdinalSuffix(index + 1)} child`;
+
+                        memberDiv.appendChild(badge);
+                        memberDiv.appendChild(document.createTextNode(member.name));
                         memberDiv.onclick = () => showPersonModal(member.id);
                         membersGrid.appendChild(memberDiv);
                     });
@@ -4517,6 +4582,16 @@
 
                 container.appendChild(genDiv);
             });
+        }
+
+        // Helper function to get ordinal suffix (1st, 2nd, 3rd, etc.)
+        function getOrdinalSuffix(num) {
+            const j = num % 10;
+            const k = num % 100;
+            if (j === 1 && k !== 11) return "st";
+            if (j === 2 && k !== 12) return "nd";
+            if (j === 3 && k !== 13) return "rd";
+            return "th";
         }
 
         // Filter Compact List by search term
@@ -5641,9 +5716,38 @@ What would you like to share?`;
             });
         }
 
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById('darkModeIcon');
+            const text = document.getElementById('darkModeText');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                icon.textContent = '☀️';
+                text.textContent = 'Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Load dark mode preference
+        function loadDarkModePreference() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeIcon').textContent = '☀️';
+                document.getElementById('darkModeText').textContent = 'Light Mode';
+            }
+        }
+
         // Initialize app
         function initializeApp() {
             console.log('Regier Family Tree App Initialized');
+            loadDarkModePreference(); // Load dark mode preference
             renderFamilyMap(); // Render cheat sheet first (primary view)
             renderFamilyTree();
             populateLocationFilter();
