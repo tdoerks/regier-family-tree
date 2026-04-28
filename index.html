@@ -1406,7 +1406,7 @@
                     id: 'ruth-curtis',
                     name: 'Ruth & Curtis Preheim',
                     parents: null,
-                    children: ['charlene-alan', 'jake-nikki', 'tyron-carolyn', 'arlan-dorcas', 'donna-john', 'jane-michael'],
+                    children: ['charlene-alan', 'jane-michael'],
                     generation: 1,
                     line: 'ruth',
                     location: ''
@@ -1667,7 +1667,7 @@
                     generation: 2,
                     line: 'ruth',
                     location: '',
-                    children: ['justin-kara', 'natalie-troy', 'emily-mitchell', 'angela-luke', 'jake-nikki', 'tyron-carolyn', 'arlan-dorcas', 'donna-john']
+                    children: ['justin-kara', 'natalie-troy', 'emily-mitchell', 'angela-luke', 'tyron-carolyn', 'arlan-dorcas', 'donna-john', 'jake-nikki']
                 },
                 {
                     id: 'jane-michael',
@@ -1705,12 +1705,12 @@
                 // Dale & Teresa's children
                 {
                     id: 'carlin-dale',
-                    name: 'Carlin',
+                    name: 'Carlin & Blake Buhrman',
                     parents: 'dale-teresa',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: []
+                    children: ['reece-carlin', 'landry-carlin']
                 },
                 {
                     id: 'jonathan-dale',
@@ -2388,6 +2388,24 @@
 
             // Generation 4: Great-Grandchildren
             gen4: [
+
+                // Carlin & Blake's children
+                {
+                    id: 'reece-carlin',
+                    name: 'Reece',
+                    parents: 'carlin-dale',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+                {
+                    id: 'landry-carlin',
+                    name: 'Landry',
+                    parents: 'carlin-dale',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
 
                 // Chris & Raquel's children
                 {
@@ -4337,27 +4355,33 @@
                 return;
             }
 
+            console.log('Tree of Life: Starting render...');
             container.innerHTML = '';
 
-            // Get width - use parent's parent (the main view container) if container is hidden
+            // Get width - use a reliable width calculation
             let width = container.clientWidth;
+            console.log('Initial width:', width);
+
             if (width === 0 || !width) {
                 // Try parent element
                 width = container.parentElement?.clientWidth;
+                console.log('Parent width:', width);
                 if (!width || width === 0) {
                     // Try grandparent (the view div)
                     width = container.parentElement?.parentElement?.clientWidth;
+                    console.log('Grandparent width:', width);
                 }
                 if (!width || width === 0) {
                     // Fallback to window width with some padding
                     width = Math.max(1000, window.innerWidth - 40);
+                    console.log('Fallback width:', width);
                 }
             }
             const height = 800;
             const centerX = width / 2;
             const centerY = height / 2;
 
-            console.log('Rendering Tree of Life', { width, height, rootCount: familyData.gen1.length });
+            console.log('Tree of Life: Rendering with dimensions', { width, height, centerX, centerY, rootCount: familyData.gen1.length });
 
             // Create SVG
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -4383,9 +4407,12 @@
             });
 
             container.appendChild(svg);
+            console.log('Tree of Life: SVG appended to container, children count:', g.childElementCount);
 
             // Add pan/zoom event listeners
             setupZoomPan(svg, g, centerX, centerY);
+
+            console.log('Tree of Life: Render complete!');
         }
 
         // Recursively draw radial branches
