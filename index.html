@@ -1356,7 +1356,7 @@
                     generation: 2,
                     line: 'herman',
                     location: '',
-                    children: ['ashleigh-shae', 'karissa-alex', 'kylie-jonathan', 'alisha', 'austin']
+                    children: ['ashleigh-larry', 'karissa-alex', 'kylie-jonathan', 'alisha', 'austin']
                 },
                 {
                     id: 'karen-terry',
@@ -1376,11 +1376,11 @@
                     generation: 2,
                     line: 'pete',
                     location: '',
-                    children: ['jason', 'janelle-nathaniel', 'jaris-sheila']
+                    children: ['jason', 'janelle-james', 'jaris-sheila']
                 },
                 {
                     id: 'gaylend-marcia',
-                    name: 'Gaylend & Marcia',
+                    name: 'Gayland & Marcia',
                     parents: 'pete-rachel',
                     generation: 2,
                     line: 'pete',
@@ -1697,13 +1697,13 @@
 
                 // Larry & Kristi's children
                 {
-                    id: 'ashleigh-shae',
-                    name: 'Ashleigh & Shae',
+                    id: 'ashleigh-larry',
+                    name: 'Ashleigh',
                     parents: 'larry-kristi',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['makeylee', 'arlo', 'aylo']
+                    children: ['shae-ashleigh', 'makeylee', 'arlo', 'aylo']
                 },
                 {
                     id: 'karissa-alex',
@@ -1791,13 +1791,13 @@
                     children: []
                 },
                 {
-                    id: 'janelle-nathaniel',
-                    name: 'Janelle & Nathaniel',
+                    id: 'janelle-james',
+                    name: 'Janelle',
                     parents: 'james-joyce',
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['natalie', 'nolan', 'noelle', 'nathan']
+                    children: ['nathaniel-janelle', 'natalie', 'nolan', 'noelle', 'nathan']
                 },
                 {
                     id: 'jaris-sheila',
@@ -1884,7 +1884,7 @@
                     generation: 3,
                     line: 'pete',
                     location: '',
-                    children: ['colton-houser', 'hannah-darin', 'trey', 'ashly']
+                    children: ['hannah-colton', 'trey', 'ashly']
                 },
                 {
                     id: 'bradley-julie',
@@ -2453,11 +2453,19 @@
                     location: ''
                 },
 
-                // Ashleigh & Shae's children
+                // Ashleigh's children
+                {
+                    id: 'shae-ashleigh',
+                    name: 'Shae',
+                    parents: 'ashleigh-larry',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
                 {
                     id: 'makeylee',
                     name: 'Makeylee',
-                    parents: 'ashleigh-shae',
+                    parents: 'ashleigh-larry',
                     generation: 4,
                     line: 'herman',
                     location: ''
@@ -2465,7 +2473,7 @@
                 {
                     id: 'arlo',
                     name: 'Arlo',
-                    parents: 'ashleigh-shae',
+                    parents: 'ashleigh-larry',
                     generation: 4,
                     line: 'herman',
                     location: ''
@@ -2473,7 +2481,7 @@
                 {
                     id: 'aylo',
                     name: 'Aylo',
-                    parents: 'ashleigh-shae',
+                    parents: 'ashleigh-larry',
                     generation: 4,
                     line: 'herman',
                     location: ''
@@ -2593,11 +2601,19 @@
                     location: ''
                 },
 
-                // Janelle & Nathaniel's children
+                // Janelle's children
+                {
+                    id: 'nathaniel-janelle',
+                    name: 'Nathaniel',
+                    parents: 'janelle-james',
+                    generation: 4,
+                    line: 'pete',
+                    location: ''
+                },
                 {
                     id: 'natalie',
                     name: 'Natalie',
-                    parents: 'janelle-nathaniel',
+                    parents: 'janelle-james',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -2605,7 +2621,7 @@
                 {
                     id: 'nolan',
                     name: 'Nolan',
-                    parents: 'janelle-nathaniel',
+                    parents: 'janelle-james',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -2613,7 +2629,7 @@
                 {
                     id: 'noelle',
                     name: 'Noelle',
-                    parents: 'janelle-nathaniel',
+                    parents: 'janelle-james',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -2621,7 +2637,7 @@
                 {
                     id: 'nathan',
                     name: 'Nathan',
-                    parents: 'janelle-nathaniel',
+                    parents: 'janelle-james',
                     generation: 4,
                     line: 'pete',
                     location: ''
@@ -2741,20 +2757,13 @@
 
                 // Darin & Katie's children
                 {
-                    id: 'colton-houser',
-                    name: 'Colton Houser',
+                    id: 'hannah-colton',
+                    name: 'Hannah & Colton',
                     parents: 'darin-katie',
                     generation: 4,
                     line: 'pete',
-                    location: ''
-                },
-                {
-                    id: 'hannah-darin',
-                    name: 'Hannah',
-                    parents: 'darin-katie',
-                    generation: 4,
-                    line: 'pete',
-                    location: ''
+                    location: '',
+                    children: ['augustus']
                 },
                 {
                     id: 'trey',
@@ -3399,6 +3408,16 @@
 
             // Generation 5: Great-Great-Grandchildren
             gen5: [
+                // Hannah & Colton's children
+                {
+                    id: 'augustus',
+                    name: 'Augustus',
+                    parents: 'hannah-colton',
+                    generation: 5,
+                    line: 'pete',
+                    location: ''
+                },
+
                 // Whitney & Aaron's children
                 {
                     id: 'haisley',
