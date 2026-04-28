@@ -1329,7 +1329,7 @@
                     generation: 2,
                     line: 'herman',
                     location: '',
-                    children: ['carlin-blake', 'jordan', 'sarah-dale']
+                    children: ['carlin-dale', 'jonathan-dale', 'jordan-sarah']
                 },
                 {
                     id: 'marilyn-craig',
@@ -1347,7 +1347,7 @@
                     generation: 2,
                     line: 'herman',
                     location: '',
-                    children: ['aaron-alyssa', 'matthew-joanna', 'lucas-simon', 'andrew-carolyn']
+                    children: ['aaron-leon', 'matthew-joanna', 'lucas-leon', 'andrew-carolyn']
                 },
                 {
                     id: 'larry-kristi',
@@ -1601,17 +1601,8 @@
             gen3: [
                 // Dale & Teresa's children
                 {
-                    id: 'carlin-blake',
-                    name: 'Carlin & Blake Buhrman',
-                    parents: 'dale-teresa',
-                    generation: 3,
-                    line: 'herman',
-                    location: '',
-                    children: ['reece', 'landry', 'jonathan-dale']
-                },
-                {
-                    id: 'jordan',
-                    name: 'Jordan',
+                    id: 'carlin-dale',
+                    name: 'Carlin',
                     parents: 'dale-teresa',
                     generation: 3,
                     line: 'herman',
@@ -1619,8 +1610,17 @@
                     children: []
                 },
                 {
-                    id: 'sarah-dale',
-                    name: 'Sarah',
+                    id: 'jonathan-dale',
+                    name: 'Jonathan',
+                    parents: 'dale-teresa',
+                    generation: 3,
+                    line: 'herman',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'jordan-sarah',
+                    name: 'Jordan & Sarah',
                     parents: 'dale-teresa',
                     generation: 3,
                     line: 'herman',
@@ -1659,13 +1659,13 @@
 
                 // Leon / Marilyn's children
                 {
-                    id: 'aaron-alyssa',
-                    name: 'Aaron & Alyssa Sidwell',
+                    id: 'aaron-leon',
+                    name: 'Aaron',
                     parents: 'leon-marilyn',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['micah', 'anna', 'caden']
+                    children: ['alyssa-christopher', 'micah-aaron', 'anna-aaron', 'caden-aaron']
                 },
                 {
                     id: 'matthew-joanna',
@@ -1677,13 +1677,13 @@
                     children: ['megan', 'elizabeth-matthew']
                 },
                 {
-                    id: 'lucas-simon',
-                    name: 'Lucas & Simon',
+                    id: 'lucas-leon',
+                    name: 'Lucas',
                     parents: 'leon-marilyn',
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: []
+                    children: ['simon-lucas']
                 },
                 {
                     id: 'andrew-carolyn',
@@ -1692,7 +1692,7 @@
                     generation: 3,
                     line: 'herman',
                     location: '',
-                    children: ['dominika', 'luk', 'kaleigh']
+                    children: ['dominika', 'luke', 'kaleigh']
                 },
 
                 // Larry & Kristi's children
@@ -2269,31 +2269,6 @@
 
             // Generation 4: Great-Grandchildren
             gen4: [
-                // Carlin & Blake's children
-                {
-                    id: 'reece',
-                    name: 'Reece',
-                    parents: 'carlin-blake',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-                {
-                    id: 'landry',
-                    name: 'Landry',
-                    parents: 'carlin-blake',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
-                {
-                    id: 'jonathan-dale',
-                    name: 'Jonathan',
-                    parents: 'carlin-blake',
-                    generation: 4,
-                    line: 'herman',
-                    location: ''
-                },
 
                 // Chris & Raquel's children
                 {
@@ -2389,27 +2364,36 @@
                     location: ''
                 },
 
-                // Aaron & Alyssa's children
+                // Aaron's children
                 {
-                    id: 'micah',
+                    id: 'alyssa-christopher',
+                    name: 'Alyssa & Christopher Sidwell',
+                    parents: 'aaron-leon',
+                    generation: 4,
+                    line: 'herman',
+                    location: '',
+                    children: []
+                },
+                {
+                    id: 'micah-aaron',
                     name: 'Micah',
-                    parents: 'aaron-alyssa',
+                    parents: 'aaron-leon',
                     generation: 4,
                     line: 'herman',
                     location: ''
                 },
                 {
-                    id: 'anna',
+                    id: 'anna-aaron',
                     name: 'Anna',
-                    parents: 'aaron-alyssa',
+                    parents: 'aaron-leon',
                     generation: 4,
                     line: 'herman',
                     location: ''
                 },
                 {
-                    id: 'caden',
+                    id: 'caden-aaron',
                     name: 'Caden',
-                    parents: 'aaron-alyssa',
+                    parents: 'aaron-leon',
                     generation: 4,
                     line: 'herman',
                     location: ''
@@ -2433,6 +2417,16 @@
                     location: ''
                 },
 
+                // Lucas's children
+                {
+                    id: 'simon-lucas',
+                    name: 'Simon',
+                    parents: 'lucas-leon',
+                    generation: 4,
+                    line: 'herman',
+                    location: ''
+                },
+
                 // Andrew & Carolyn's children
                 {
                     id: 'dominika',
@@ -2443,8 +2437,8 @@
                     location: ''
                 },
                 {
-                    id: 'luk',
-                    name: 'Luk',
+                    id: 'luke',
+                    name: 'Luke',
                     parents: 'andrew-carolyn',
                     generation: 4,
                     line: 'herman',
