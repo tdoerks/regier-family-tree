@@ -988,6 +988,90 @@
         .compact-member.ruth { border-left-color: var(--ruth); }
         .compact-member.ivan { border-left-color: var(--ivan); }
 
+        /* Person Detail Modal */
+        .person-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .person-modal.active {
+            display: flex;
+        }
+
+        .person-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .person-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+        }
+
+        .person-modal-close:hover {
+            color: #333;
+        }
+
+        .person-modal-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .person-modal-detail {
+            margin: 12px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .person-modal-detail strong {
+            min-width: 120px;
+            color: #666;
+        }
+
+        .person-modal-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Clickable names */
+        .clickable-name {
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+
+        .clickable-name:hover {
+            text-decoration-style: solid;
+            opacity: 0.8;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -1222,6 +1306,14 @@
                 </div>
             </div>
 
+            <!-- Find Me Feature -->
+            <div style="text-align: center; margin: 15px auto; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; max-width: 600px;">
+                <label style="color: white; font-weight: bold; font-size: 16px; margin-right: 10px;">👤 Find Me:</label>
+                <input type="text" id="findMeSearch" placeholder="Type your name..." list="familyNames" style="padding: 8px 12px; font-size: 14px; border: none; border-radius: 6px; width: 300px; max-width: 60%;">
+                <button onclick="highlightMyBranch()" style="padding: 8px 16px; margin-left: 10px; background: white; color: #667eea; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Highlight My Branch</button>
+                <button onclick="clearHighlight()" style="padding: 8px 16px; margin-left: 5px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 6px; cursor: pointer;">Clear</button>
+            </div>
+
             <!-- Search Tools -->
             <div class="map-search-tools">
                 <div class="search-tool">
@@ -1301,6 +1393,10 @@
 
             <!-- Compact List View -->
             <div id="compactView" class="map-view">
+                <button class="print-button" onclick="window.print()">🖨️ Print Compact List</button>
+                <div style="text-align: center; margin: 10px 0 20px 0;">
+                    <input type="text" id="compactSearch" placeholder="🔍 Search by name..." style="padding: 10px 15px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; width: 400px; max-width: 90%;" oninput="filterCompactList()">
+                </div>
                 <div id="compactContainer" class="compact-container">
                     <!-- Compact list will be generated here -->
                 </div>
@@ -1391,6 +1487,16 @@
     <button class="contact-fab" onclick="contactDeveloper()" title="Contact Developer">
         💬
     </button>
+
+    <!-- Person Detail Modal -->
+    <div id="personModal" class="person-modal" onclick="closePersonModal(event)">
+        <div class="person-modal-content" onclick="event.stopPropagation()">
+            <button class="person-modal-close" onclick="closePersonModal()">&times;</button>
+            <div id="personModalBody">
+                <!-- Content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
 
     <script>
         // Password protection
@@ -4399,8 +4505,9 @@
 
                     members.forEach(member => {
                         const memberDiv = document.createElement('div');
-                        memberDiv.className = `compact-member ${line}`;
+                        memberDiv.className = `compact-member ${line} clickable-name`;
                         memberDiv.textContent = member.name;
+                        memberDiv.onclick = () => showPersonModal(member.id);
                         membersGrid.appendChild(memberDiv);
                     });
 
@@ -4409,6 +4516,22 @@
                 });
 
                 container.appendChild(genDiv);
+            });
+        }
+
+        // Filter Compact List by search term
+        function filterCompactList() {
+            const searchTerm = document.getElementById('compactSearch').value.toLowerCase();
+            const members = document.querySelectorAll('.compact-member');
+
+            members.forEach(member => {
+                const name = member.textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    member.style.display = '';
+                    member.style.backgroundColor = searchTerm ? '#fffacd' : '';
+                } else {
+                    member.style.display = searchTerm ? 'none' : '';
+                }
             });
         }
 
@@ -5363,6 +5486,159 @@ Please send an email to: tyler.tyler.d@gmail.com
 What would you like to share?`;
 
             alert(message);
+        }
+
+        // Show person detail modal
+        function showPersonModal(personId) {
+            const person = findPerson(personId);
+            if (!person) return;
+
+            const modal = document.getElementById('personModal');
+            const modalBody = document.getElementById('personModalBody');
+
+            // Get family line name
+            const lineNames = {
+                'pete': 'Pete & Rachel',
+                'herman': 'Herman & Sarah',
+                'doerksen': 'Marion & Harold',
+                'ruth': 'Ruth & Curtis',
+                'ivan': 'Ivan & Ann'
+            };
+
+            // Get parents
+            let parentsText = 'None (Root)';
+            if (person.parents) {
+                const parent = findPerson(person.parents);
+                parentsText = parent ? parent.name : person.parents;
+            }
+
+            // Get children
+            let childrenText = 'None';
+            if (person.children && person.children.length > 0) {
+                const childNames = person.children.map(childId => {
+                    const child = findPerson(childId);
+                    return child ? child.name : childId;
+                });
+                childrenText = childNames.join(', ');
+            }
+
+            const lineColor = getComputedStyle(document.documentElement).getPropertyValue(`--${person.line}`).trim();
+
+            modalBody.innerHTML = `
+                <div class="person-modal-header">${person.name}</div>
+                <div class="person-modal-detail">
+                    <strong>Family Line:</strong>
+                    <span class="person-modal-badge" style="background-color: ${lineColor};">
+                        ${lineNames[person.line] || person.line}
+                    </span>
+                </div>
+                <div class="person-modal-detail">
+                    <strong>Generation:</strong>
+                    <span>Generation ${person.generation}</span>
+                </div>
+                ${person.location ? `
+                <div class="person-modal-detail">
+                    <strong>Location:</strong>
+                    <span>${person.location}</span>
+                </div>
+                ` : ''}
+                <div class="person-modal-detail">
+                    <strong>Parents:</strong>
+                    <span>${parentsText}</span>
+                </div>
+                <div class="person-modal-detail">
+                    <strong>Children:</strong>
+                    <span style="max-width: 300px;">${childrenText}</span>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closePersonModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('personModal');
+            modal.classList.remove('active');
+        }
+
+        // Highlight user's branch in the family tree
+        function highlightMyBranch() {
+            const searchInput = document.getElementById('findMeSearch').value.trim();
+            if (!searchInput) {
+                alert('Please enter your name first!');
+                return;
+            }
+
+            // Find the person
+            const person = getAllMembers().find(p =>
+                p.name.toLowerCase() === searchInput.toLowerCase() ||
+                p.name.toLowerCase().includes(searchInput.toLowerCase())
+            );
+
+            if (!person) {
+                alert(`Could not find "${searchInput}" in the family tree. Please check the spelling and try again.`);
+                return;
+            }
+
+            // Get all ancestors and descendants
+            const relatedPeople = new Set();
+
+            // Add the person themselves
+            relatedPeople.add(person.id);
+
+            // Add all ancestors (going up)
+            let current = person;
+            while (current.parents) {
+                relatedPeople.add(current.parents);
+                current = findPerson(current.parents);
+                if (!current) break;
+            }
+
+            // Add all descendants (going down)
+            function addDescendants(personId) {
+                const p = findPerson(personId);
+                if (!p || !p.children) return;
+                p.children.forEach(childId => {
+                    relatedPeople.add(childId);
+                    addDescendants(childId);
+                });
+            }
+            addDescendants(person.id);
+
+            // Highlight in all views
+            // Clear previous highlights
+            clearHighlight();
+
+            // Add highlights
+            const allElements = document.querySelectorAll('[data-person-id]');
+            allElements.forEach(el => {
+                const personId = el.getAttribute('data-person-id');
+                if (relatedPeople.has(personId)) {
+                    el.style.outline = '3px solid #667eea';
+                    el.style.outlineOffset = '2px';
+                    el.style.backgroundColor = '#e0e7ff';
+                } else {
+                    el.style.opacity = '0.3';
+                }
+            });
+
+            // Scroll to the person
+            const firstMatch = document.querySelector(`[data-person-id="${person.id}"]`);
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            alert(`✨ Highlighted your branch! Found ${relatedPeople.size} related family members (including you, your ancestors, and descendants).`);
+        }
+
+        function clearHighlight() {
+            const allElements = document.querySelectorAll('[data-person-id]');
+            allElements.forEach(el => {
+                el.style.outline = '';
+                el.style.outlineOffset = '';
+                el.style.backgroundColor = '';
+                el.style.opacity = '';
+            });
         }
 
         // Initialize app
