@@ -625,6 +625,57 @@
         .chronos-card.ruth { border-left: 6px solid var(--ruth); }
         .chronos-card.ivan { border-left: 6px solid var(--ivan); }
 
+        /* Traditional View - Outline Style */
+        .traditional-family-section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 20px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .traditional-header {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 16px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .traditional-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0;
+        }
+
+        .traditional-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .traditional-item:hover {
+            background: #f8f9fa;
+        }
+
+        .traditional-name {
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .traditional-badge {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 3px 10px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .tree-children {
                 flex-direction: column;
@@ -3222,7 +3273,7 @@
             switchMapView(savedView);
         }
 
-        // Traditional vertical tree view (existing)
+        // Traditional view - Compact list format
         function renderTraditionalMap() {
             const container = document.getElementById('traditionalContainer');
             container.innerHTML = '';
@@ -3238,17 +3289,67 @@
                 { id: 'ivan-ann', name: 'Ivan & Ann', line: 'ivan' }
             ];
 
-            // Render each family line as a traditional vertical tree
+            // Render each family line as a compact outline
             familyLines.forEach(rootFamily => {
-                const treeContainer = document.createElement('div');
-                treeContainer.className = 'tree-container';
+                const familySection = document.createElement('div');
+                familySection.className = 'traditional-family-section';
+                familySection.style.borderLeft = `6px solid var(--${rootFamily.line})`;
 
-                // Create the tree structure
-                const treeNode = renderTreeNode(rootFamily.id, rootFamily.line);
-                treeContainer.appendChild(treeNode);
+                // Family header
+                const header = document.createElement('h2');
+                header.className = 'traditional-header';
+                header.style.color = `var(--${rootFamily.line})`;
+                header.textContent = rootFamily.name;
+                familySection.appendChild(header);
 
-                container.appendChild(treeContainer);
+                // Get the root person
+                const rootPerson = getAllMembers().find(p => p.id === rootFamily.id);
+                if (rootPerson) {
+                    renderTraditionalOutline(familySection, rootPerson, 0);
+                }
+
+                container.appendChild(familySection);
             });
+        }
+
+        // Recursively render traditional outline
+        function renderTraditionalOutline(container, person, indent) {
+            const children = person.children ? person.children.map(childId =>
+                getAllMembers().find(p => p.id === childId)
+            ).filter(Boolean) : [];
+
+            if (children.length === 0) return;
+
+            const list = document.createElement('ul');
+            list.className = 'traditional-list';
+            list.style.marginLeft = `${indent * 20}px`;
+
+            children.forEach(child => {
+                const item = document.createElement('li');
+                item.className = 'traditional-item';
+
+                // Person name
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'traditional-name';
+                nameSpan.textContent = child.name;
+                item.appendChild(nameSpan);
+
+                // Child count badge
+                const childCount = child.children ? child.children.length : 0;
+                if (childCount > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'traditional-badge';
+                    badge.textContent = `${childCount} ${childCount === 1 ? 'child' : 'children'}`;
+                    item.appendChild(badge);
+                }
+
+                list.appendChild(item);
+
+                // Recursively add children
+                renderTraditionalOutline(item, child, 0);
+            });
+
+            container.appendChild(list);
         }
 
         // Tree of Life - Radial view with zoom/pan
@@ -3281,7 +3382,7 @@
             rootFamilies.forEach((root, index) => {
                 const startAngle = index * angleStep - Math.PI / 2; // Start from top
                 const endAngle = (index + 1) * angleStep - Math.PI / 2;
-                drawRadialBranch(g, root, 0, 60, startAngle, endAngle, 0);
+                drawRadialBranch(g, root, 50, 70, startAngle, endAngle, 1); // Start at radius 50, generation 1
             });
 
             container.appendChild(svg);
@@ -3302,24 +3403,31 @@
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             circle.setAttribute('cx', x);
             circle.setAttribute('cy', y);
-            circle.setAttribute('r', generation === 1 ? 25 : 15);
+            circle.setAttribute('r', generation === 1 ? 25 : (generation === 2 ? 12 : 8));
             circle.setAttribute('fill', `var(--${person.line})`);
             circle.setAttribute('stroke', 'white');
             circle.setAttribute('stroke-width', '2');
             circle.style.cursor = 'pointer';
-            circle.innerHTML = `<title>${person.name}</title>`;
+
+            // Add tooltip
+            const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            title.textContent = person.name;
+            circle.appendChild(title);
+
             container.appendChild(circle);
 
-            // Draw label
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('x', x);
-            text.setAttribute('y', y - (generation === 1 ? 30 : 20));
-            text.setAttribute('text-anchor', 'middle');
-            text.setAttribute('fill', '#333');
-            text.setAttribute('font-size', generation === 1 ? '12px' : '10px');
-            text.setAttribute('font-weight', generation === 1 ? 'bold' : 'normal');
-            text.textContent = person.name.length > 20 ? person.name.substring(0, 18) + '...' : person.name;
-            container.appendChild(text);
+            // Draw label (only for gen 1 and 2 to avoid clutter)
+            if (generation <= 2) {
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x);
+                text.setAttribute('y', y - (generation === 1 ? 32 : 18));
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#333');
+                text.setAttribute('font-size', generation === 1 ? '13px' : '10px');
+                text.setAttribute('font-weight', generation === 1 ? 'bold' : 'normal');
+                text.textContent = person.name.length > 20 ? person.name.substring(0, 18) + '...' : person.name;
+                container.appendChild(text);
+            }
 
             // Get children
             const children = person.children ? person.children.map(childId =>
