@@ -466,6 +466,165 @@
             background: #e67a32;
         }
 
+        /* Map View Switcher */
+        .map-view-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .view-button {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
+        }
+
+        .view-button:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .view-button.active {
+            background: var(--doerksen);
+            color: white;
+            border-color: var(--doerksen);
+        }
+
+        /* Map View Containers */
+        .map-view {
+            display: none;
+        }
+
+        .map-view.active {
+            display: block;
+        }
+
+        /* Tree of Life (Radial) View */
+        .radial-tree-container {
+            width: 100%;
+            height: 800px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+        }
+
+        .radial-tree-container:active {
+            cursor: grabbing;
+        }
+
+        .tree-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .zoom-button {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .zoom-button:hover {
+            background: #f8f9fa;
+            transform: scale(1.1);
+        }
+
+        /* Chronos Drill-down View */
+        .chronos-breadcrumb {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .chronos-breadcrumb a {
+            color: var(--doerksen);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .chronos-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .chronos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .chronos-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chronos-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-color: var(--doerksen);
+        }
+
+        .chronos-card-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .chronos-card-info {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .chronos-card-children {
+            display: inline-block;
+            background: var(--doerksen);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .chronos-card.herman { border-left: 6px solid var(--herman); }
+        .chronos-card.pete { border-left: 6px solid var(--pete); }
+        .chronos-card.ronald { border-left: 6px solid var(--ronald); }
+        .chronos-card.donald { border-left: 6px solid var(--donald); }
+        .chronos-card.doerksen { border-left: 6px solid var(--doerksen); }
+        .chronos-card.ruth { border-left: 6px solid var(--ruth); }
+        .chronos-card.ivan { border-left: 6px solid var(--ivan); }
+
         @media (max-width: 768px) {
             .tree-children {
                 flex-direction: column;
@@ -566,13 +725,50 @@
 
         <!-- Family Map Tab (Cheat Sheet) -->
         <div class="tab-content active" id="mapTab">
-            <div style="text-align: center; margin-bottom: 30px;">
+            <div style="text-align: center; margin-bottom: 20px;">
                 <h1 style="font-size: 2.5em; font-weight: bold; margin: 0; color: var(--text-dark);">FAMILY MAP</h1>
                 <p style="font-size: 1.1em; color: var(--text-light); margin: 10px 0 0 0;">Multiple Generations • All in One Family</p>
             </div>
-            <button class="print-button" onclick="window.print()">🖨️ Print Family Map</button>
-            <div id="familyMapContainer" class="family-map-container">
-                <!-- Family map will be dynamically generated here -->
+
+            <!-- View Mode Switcher -->
+            <div class="map-view-switcher">
+                <button class="view-button active" onclick="switchMapView('treeoflife')" id="viewBtn-treeoflife">
+                    🌳 Tree of Life
+                </button>
+                <button class="view-button" onclick="switchMapView('chronos')" id="viewBtn-chronos">
+                    📊 Chronos
+                </button>
+                <button class="view-button" onclick="switchMapView('traditional')" id="viewBtn-traditional">
+                    📋 Traditional
+                </button>
+            </div>
+
+            <!-- Tree of Life View -->
+            <div id="treeOfLifeView" class="map-view active">
+                <div class="tree-controls">
+                    <button onclick="zoomIn()" class="zoom-button">+</button>
+                    <button onclick="zoomOut()" class="zoom-button">−</button>
+                    <button onclick="resetZoom()" class="zoom-button">⟲ Reset</button>
+                </div>
+                <div id="treeOfLifeContainer" class="radial-tree-container">
+                    <!-- SVG will be generated here -->
+                </div>
+            </div>
+
+            <!-- Chronos Drill-down View -->
+            <div id="chronosView" class="map-view">
+                <div id="chronosBreadcrumb" class="chronos-breadcrumb"></div>
+                <div id="chronosContainer" class="chronos-container">
+                    <!-- Cards will be generated here -->
+                </div>
+            </div>
+
+            <!-- Traditional Tree View -->
+            <div id="traditionalView" class="map-view">
+                <button class="print-button" onclick="window.print()">🖨️ Print Family Map</button>
+                <div id="traditionalContainer" class="family-map-container">
+                    <!-- Traditional tree will be generated here -->
+                </div>
             </div>
         </div>
 
@@ -2989,8 +3185,46 @@
         }
 
         // Render Family Map (Horizontal Flowchart)
+        // Map view state
+        let currentMapView = 'treeoflife';
+        let currentZoom = 1;
+        let chronosPath = [];
+
+        // Switch between map views
+        function switchMapView(viewName) {
+            currentMapView = viewName;
+
+            // Update button states
+            document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`viewBtn-${viewName}`).classList.add('active');
+
+            // Update view visibility
+            document.querySelectorAll('.map-view').forEach(view => view.classList.remove('active'));
+            document.getElementById(`${viewName}View`).classList.add('active');
+
+            // Render the selected view
+            if (viewName === 'treeoflife') {
+                renderTreeOfLife();
+            } else if (viewName === 'chronos') {
+                renderChronos();
+            } else if (viewName === 'traditional') {
+                renderTraditionalMap();
+            }
+
+            // Save preference
+            localStorage.setItem('preferredMapView', viewName);
+        }
+
+        // Main render function - called on init
         function renderFamilyMap() {
-            const container = document.getElementById('familyMapContainer');
+            // Check for saved preference
+            const savedView = localStorage.getItem('preferredMapView') || 'treeoflife';
+            switchMapView(savedView);
+        }
+
+        // Traditional vertical tree view (existing)
+        function renderTraditionalMap() {
+            const container = document.getElementById('traditionalContainer');
             container.innerHTML = '';
 
             // Define the 7 family lines (root couples in Gen 1)
@@ -3015,6 +3249,261 @@
 
                 container.appendChild(treeContainer);
             });
+        }
+
+        // Tree of Life - Radial view with zoom/pan
+        function renderTreeOfLife() {
+            const container = document.getElementById('treeOfLifeContainer');
+            container.innerHTML = '';
+
+            const width = container.clientWidth;
+            const height = 800;
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            // Create SVG
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
+            svg.setAttribute('id', 'radialTreeSVG');
+
+            // Create a group for zoom/pan transforms
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('id', 'treeGroup');
+            g.setAttribute('transform', `translate(${centerX}, ${centerY}) scale(${currentZoom})`);
+            svg.appendChild(g);
+
+            // Get root families
+            const rootFamilies = familyData.gen1;
+            const angleStep = (2 * Math.PI) / rootFamilies.length;
+
+            // Draw each family line radiating from center
+            rootFamilies.forEach((root, index) => {
+                const startAngle = index * angleStep - Math.PI / 2; // Start from top
+                const endAngle = (index + 1) * angleStep - Math.PI / 2;
+                drawRadialBranch(g, root, 0, 60, startAngle, endAngle, 0);
+            });
+
+            container.appendChild(svg);
+
+            // Add pan/zoom event listeners
+            setupZoomPan(svg, g, centerX, centerY);
+        }
+
+        // Recursively draw radial branches
+        function drawRadialBranch(container, person, currentRadius, radiusIncrement, startAngle, endAngle, generation) {
+            if (!person) return;
+
+            const angle = (startAngle + endAngle) / 2;
+            const x = currentRadius * Math.cos(angle);
+            const y = currentRadius * Math.sin(angle);
+
+            // Draw person node
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', generation === 1 ? 25 : 15);
+            circle.setAttribute('fill', `var(--${person.line})`);
+            circle.setAttribute('stroke', 'white');
+            circle.setAttribute('stroke-width', '2');
+            circle.style.cursor = 'pointer';
+            circle.innerHTML = `<title>${person.name}</title>`;
+            container.appendChild(circle);
+
+            // Draw label
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x);
+            text.setAttribute('y', y - (generation === 1 ? 30 : 20));
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', '#333');
+            text.setAttribute('font-size', generation === 1 ? '12px' : '10px');
+            text.setAttribute('font-weight', generation === 1 ? 'bold' : 'normal');
+            text.textContent = person.name.length > 20 ? person.name.substring(0, 18) + '...' : person.name;
+            container.appendChild(text);
+
+            // Get children
+            const children = person.children ? person.children.map(childId =>
+                getAllMembers().find(p => p.id === childId)
+            ).filter(Boolean) : [];
+
+            if (children.length > 0) {
+                const nextRadius = currentRadius + radiusIncrement;
+                const angleRange = endAngle - startAngle;
+                const childAngleStep = angleRange / children.length;
+
+                children.forEach((child, i) => {
+                    const childStartAngle = startAngle + (i * childAngleStep);
+                    const childEndAngle = startAngle + ((i + 1) * childAngleStep);
+                    const childAngle = (childStartAngle + childEndAngle) / 2;
+
+                    const childX = nextRadius * Math.cos(childAngle);
+                    const childY = nextRadius * Math.sin(childAngle);
+
+                    // Draw connecting line
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', x);
+                    line.setAttribute('y1', y);
+                    line.setAttribute('x2', childX);
+                    line.setAttribute('y2', childY);
+                    line.setAttribute('stroke', '#ccc');
+                    line.setAttribute('stroke-width', '2');
+                    container.insertBefore(line, container.firstChild); // Insert lines first so circles are on top
+
+                    // Recursively draw child
+                    drawRadialBranch(container, child, nextRadius, radiusIncrement, childStartAngle, childEndAngle, generation + 1);
+                });
+            }
+        }
+
+        // Setup zoom and pan
+        function setupZoomPan(svg, g, centerX, centerY) {
+            let isPanning = false;
+            let startX, startY, currentTranslateX = centerX, currentTranslateY = centerY;
+
+            svg.addEventListener('mousedown', (e) => {
+                isPanning = true;
+                startX = e.clientX;
+                startY = e.clientY;
+            });
+
+            svg.addEventListener('mousemove', (e) => {
+                if (!isPanning) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                startX = e.clientX;
+                startY = e.clientY;
+                currentTranslateX += dx;
+                currentTranslateY += dy;
+                g.setAttribute('transform', `translate(${currentTranslateX}, ${currentTranslateY}) scale(${currentZoom})`);
+            });
+
+            svg.addEventListener('mouseup', () => {
+                isPanning = false;
+            });
+
+            svg.addEventListener('mouseleave', () => {
+                isPanning = false;
+            });
+
+            // Store transform values for zoom functions
+            svg.dataset.translateX = currentTranslateX;
+            svg.dataset.translateY = currentTranslateY;
+        }
+
+        // Zoom controls
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom * 1.2, 3);
+            updateZoom();
+        }
+
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom / 1.2, 0.3);
+            updateZoom();
+        }
+
+        function resetZoom() {
+            currentZoom = 1;
+            const container = document.getElementById('treeOfLifeContainer');
+            const centerX = container.clientWidth / 2;
+            const centerY = 400;
+            const g = document.getElementById('treeGroup');
+            if (g) {
+                g.setAttribute('transform', `translate(${centerX}, ${centerY}) scale(1)`);
+            }
+        }
+
+        function updateZoom() {
+            const svg = document.getElementById('radialTreeSVG');
+            const g = document.getElementById('treeGroup');
+            if (svg && g) {
+                const translateX = parseFloat(svg.dataset.translateX || svg.clientWidth / 2);
+                const translateY = parseFloat(svg.dataset.translateY || 400);
+                g.setAttribute('transform', `translate(${translateX}, ${translateY}) scale(${currentZoom})`);
+            }
+        }
+
+        // Chronos Drill-down View
+        function renderChronos(personId = null) {
+            const container = document.getElementById('chronosContainer');
+            const breadcrumb = document.getElementById('chronosBreadcrumb');
+            container.innerHTML = '';
+
+            // If no personId, show root families
+            if (!personId) {
+                chronosPath = [];
+                breadcrumb.innerHTML = '<strong>Family Lines</strong>';
+
+                const rootFamilies = familyData.gen1;
+                rootFamilies.forEach(root => {
+                    container.appendChild(createChronosCard(root, true));
+                });
+            } else {
+                // Show children of selected person
+                const person = getAllMembers().find(p => p.id === personId);
+                if (!person) return;
+
+                // Update breadcrumb
+                updateChronosBreadcrumb(person);
+
+                // Get children
+                const children = person.children ? person.children.map(childId =>
+                    getAllMembers().find(p => p.id === childId)
+                ).filter(Boolean) : [];
+
+                if (children.length > 0) {
+                    children.forEach(child => {
+                        container.appendChild(createChronosCard(child, false));
+                    });
+                } else {
+                    container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">No children to display</p>';
+                }
+            }
+        }
+
+        function createChronosCard(person, isRoot) {
+            const card = document.createElement('div');
+            card.className = `chronos-card ${person.line}`;
+
+            const hasChildren = person.children && person.children.length > 0;
+
+            card.innerHTML = `
+                <div class="chronos-card-header">${person.name}</div>
+                <div class="chronos-card-info">Generation ${person.generation}</div>
+                ${hasChildren ? `<div class="chronos-card-children">${person.children.length} ${person.children.length === 1 ? 'child' : 'children'}</div>` : ''}
+            `;
+
+            if (hasChildren) {
+                card.style.cursor = 'pointer';
+                card.onclick = () => {
+                    chronosPath.push(person);
+                    renderChronos(person.id);
+                };
+            }
+
+            return card;
+        }
+
+        function updateChronosBreadcrumb(person) {
+            const breadcrumb = document.getElementById('chronosBreadcrumb');
+            let html = '<a onclick="renderChronos()">Family Lines</a>';
+
+            chronosPath.forEach((p, index) => {
+                html += ' → ';
+                if (index < chronosPath.length - 1) {
+                    html += `<a onclick="navigateToBreadcrumb(${index})">${p.name}</a>`;
+                } else {
+                    html += `<strong>${p.name}</strong>`;
+                }
+            });
+
+            html += ` → <strong>${person.name}</strong>`;
+            breadcrumb.innerHTML = html;
+        }
+
+        function navigateToBreadcrumb(index) {
+            chronosPath = chronosPath.slice(0, index + 1);
+            const person = chronosPath[chronosPath.length - 1];
+            renderChronos(person.id);
         }
 
         // Recursively render tree nodes
