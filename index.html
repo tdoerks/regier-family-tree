@@ -1470,7 +1470,7 @@
         <!-- Navigation Tabs -->
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('map')">🗺️ Family Map</button>
-            <button class="tab-button" onclick="showTab('tree')">📅 Family Timeline</button>
+            <button class="tab-button" onclick="showTab('tree')">🌳 Interactive Tree</button>
             <button class="tab-button" onclick="showTab('stats')">📊 Statistics</button>
             <button class="tab-button" onclick="showTab('bingo')">🎮 Family Bingo</button>
             <button class="tab-button" onclick="showTab('passport')">📖 Reunion Passport</button>
@@ -1596,13 +1596,13 @@
             </div>
         </div>
 
-        <!-- Family Timeline Tab -->
+        <!-- Interactive Family Tree Tab -->
         <div class="tab-content" id="treeTab">
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="🔍 Search family by name..." oninput="searchFamily()">
                 <select id="generationFilter" onchange="filterByGeneration()">
                     <option value="">All Generations</option>
-                    <option value="1">Generation 1 (1924+)</option>
+                    <option value="1">Generation 1</option>
                     <option value="2">Generation 2</option>
                     <option value="3">Generation 3</option>
                     <option value="4">Generation 4</option>
@@ -1621,8 +1621,8 @@
                 </select>
                 <button onclick="clearFilters()" style="margin-left: 10px;">Clear Filters</button>
             </div>
-            <div id="timelineContainer" class="timeline-container">
-                <!-- Family timeline will be dynamically generated here -->
+            <div id="familyTreeContainer" class="family-tree-container">
+                <!-- Family tree will be dynamically generated here -->
             </div>
         </div>
 
@@ -5217,101 +5217,22 @@
             return node;
         }
 
-        // Render family timeline
+        // Render family tree (expandable/collapsible)
         function renderFamilyTree(members = getAllMembers()) {
-            const container = document.getElementById('timelineContainer');
+            const container = document.getElementById('familyTreeContainer');
             if (!container) return;
 
             container.innerHTML = '';
 
-            if (members.length === 0) {
-                container.innerHTML = '<div class="timeline-empty">No family members match your search criteria.</div>';
-                return;
-            }
+            // Start with generation 1 (roots)
+            const roots = members.filter(p => p.generation === 1);
 
-            // Group members by generation
-            const generations = {
-                1: { label: 'Generation 1', years: '1924+', members: [] },
-                2: { label: 'Generation 2', years: '1950s-1970s', members: [] },
-                3: { label: 'Generation 3', years: '1970s-1990s', members: [] },
-                4: { label: 'Generation 4', years: '1990s-2010s', members: [] },
-                5: { label: 'Generation 5', years: '2010s+', members: [] }
-            };
-
-            members.forEach(person => {
-                if (generations[person.generation]) {
-                    generations[person.generation].members.push(person);
-                }
+            roots.forEach(root => {
+                const familyLine = document.createElement('div');
+                familyLine.className = `family-line ${root.line}`;
+                familyLine.appendChild(renderPerson(root, members));
+                container.appendChild(familyLine);
             });
-
-            // Create timeline wrapper
-            const wrapper = document.createElement('div');
-            wrapper.className = 'timeline-wrapper';
-
-            // Render each generation column
-            for (let gen = 1; gen <= 5; gen++) {
-                const genData = generations[gen];
-                if (genData.members.length === 0) continue;
-
-                const genDiv = document.createElement('div');
-                genDiv.className = 'timeline-generation';
-
-                // Header
-                const header = document.createElement('div');
-                header.className = 'timeline-generation-header';
-                header.innerHTML = `
-                    <div class="timeline-generation-label">${genData.label}</div>
-                    <div class="timeline-generation-years">${genData.years}</div>
-                    <div class="timeline-generation-years">${genData.members.length} member${genData.members.length !== 1 ? 's' : ''}</div>
-                `;
-                genDiv.appendChild(header);
-
-                // Members list
-                const membersDiv = document.createElement('div');
-                membersDiv.className = 'timeline-members';
-
-                // Sort members by family line for better visual grouping
-                const sortedMembers = genData.members.sort((a, b) => {
-                    const lineOrder = ['pete', 'herman', 'doerksen', 'ruth', 'ivan', 'ronald', 'donald'];
-                    return lineOrder.indexOf(a.line) - lineOrder.indexOf(b.line);
-                });
-
-                sortedMembers.forEach(person => {
-                    const personDiv = document.createElement('div');
-                    personDiv.className = `timeline-person ${person.line}`;
-                    personDiv.onclick = () => showPersonModal(person.id);
-
-                    let html = '<div class="timeline-person-name">';
-
-                    // Add birth order if available
-                    if (person.birthOrder) {
-                        html += `<span class="timeline-person-birth-order">${person.birthOrder}</span>`;
-                    }
-
-                    html += person.name;
-                    html += '</div>';
-
-                    if (person.location) {
-                        html += `<div class="timeline-person-location">📍 ${person.location}</div>`;
-                    }
-
-                    personDiv.innerHTML = html;
-                    membersDiv.appendChild(personDiv);
-                });
-
-                genDiv.appendChild(membersDiv);
-
-                // Add connector line (except for last generation)
-                if (gen < 5 && generations[gen + 1].members.length > 0) {
-                    const connector = document.createElement('div');
-                    connector.className = 'timeline-connector';
-                    genDiv.appendChild(connector);
-                }
-
-                wrapper.appendChild(genDiv);
-            }
-
-            container.appendChild(wrapper);
         }
 
         // Render individual person card
