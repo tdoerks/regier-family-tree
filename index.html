@@ -1541,8 +1541,8 @@
                 <button class="view-button" onclick="switchMapView('chronos')" id="viewBtn-chronos">
                     📊 Chronos
                 </button>
-                <button class="view-button" onclick="switchMapView('treeoflife')" id="viewBtn-treeoflife">
-                    🌳 Tree of Life
+                <button class="view-button" onclick="switchMapView('timeline')" id="viewBtn-timeline">
+                    📅 Timeline
                 </button>
                 <button class="view-button" onclick="switchMapView('royal')" id="viewBtn-royal">
                     👑 Royal Dynasty
@@ -1568,15 +1568,10 @@
                 </div>
             </div>
 
-            <!-- Tree of Life View -->
-            <div id="treeOfLifeView" class="map-view">
-                <div class="tree-controls">
-                    <button onclick="zoomIn()" class="zoom-button">+</button>
-                    <button onclick="zoomOut()" class="zoom-button">−</button>
-                    <button onclick="resetZoom()" class="zoom-button">⟲ Reset</button>
-                </div>
-                <div id="treeOfLifeContainer" class="radial-tree-container">
-                    <!-- SVG will be generated here -->
+            <!-- Timeline View -->
+            <div id="timelineView" class="map-view">
+                <div id="mapTimelineContainer" class="timeline-container">
+                    <!-- Timeline will be generated here -->
                 </div>
             </div>
 
@@ -4274,8 +4269,8 @@
             }
 
             // Render the selected view
-            if (viewName === 'treeoflife') {
-                renderTreeOfLife();
+            if (viewName === 'timeline') {
+                renderMapTimeline();
             } else if (viewName === 'chronos') {
                 renderChronos();
             } else if (viewName === 'traditional') {
@@ -4750,6 +4745,105 @@
         }
 
         // Tree of Life - Radial view with zoom/pan
+        // Render Timeline in Map View
+        function renderMapTimeline() {
+            const container = document.getElementById('mapTimelineContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const allMembers = getAllMembers();
+            if (allMembers.length === 0) {
+                container.innerHTML = '<div class="timeline-empty">No family members to display.</div>';
+                return;
+            }
+
+            // Group members by generation
+            const generations = {
+                1: { label: 'Generation 1', years: '1924+', members: [] },
+                2: { label: 'Generation 2', years: '1950s-1970s', members: [] },
+                3: { label: 'Generation 3', years: '1970s-1990s', members: [] },
+                4: { label: 'Generation 4', years: '1990s-2010s', members: [] },
+                5: { label: 'Generation 5', years: '2010s+', members: [] }
+            };
+
+            allMembers.forEach(person => {
+                if (generations[person.generation]) {
+                    generations[person.generation].members.push(person);
+                }
+            });
+
+            // Create timeline wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'timeline-wrapper';
+
+            // Render each generation column
+            for (let gen = 1; gen <= 5; gen++) {
+                const genData = generations[gen];
+                if (genData.members.length === 0) continue;
+
+                const genDiv = document.createElement('div');
+                genDiv.className = 'timeline-generation';
+
+                // Header
+                const header = document.createElement('div');
+                header.className = 'timeline-generation-header';
+                header.innerHTML = `
+                    <div class="timeline-generation-label">${genData.label}</div>
+                    <div class="timeline-generation-years">${genData.years}</div>
+                    <div class="timeline-generation-years">${genData.members.length} member${genData.members.length !== 1 ? 's' : ''}</div>
+                `;
+                genDiv.appendChild(header);
+
+                // Members list
+                const membersDiv = document.createElement('div');
+                membersDiv.className = 'timeline-members';
+
+                // Sort members by family line for better visual grouping
+                const sortedMembers = genData.members.sort((a, b) => {
+                    const lineOrder = ['pete', 'herman', 'doerksen', 'ruth', 'ivan', 'ronald', 'donald'];
+                    return lineOrder.indexOf(a.line) - lineOrder.indexOf(b.line);
+                });
+
+                sortedMembers.forEach(person => {
+                    const personDiv = document.createElement('div');
+                    personDiv.className = `timeline-person ${person.line}`;
+                    personDiv.onclick = () => showPersonModal(person.id);
+
+                    let html = '<div class="timeline-person-name">';
+
+                    // Add birth order if available
+                    if (person.birthOrder) {
+                        html += `<span class="timeline-person-birth-order">${person.birthOrder}</span>`;
+                    }
+
+                    html += person.name;
+                    html += '</div>';
+
+                    if (person.location) {
+                        html += `<div class="timeline-person-location">📍 ${person.location}</div>`;
+                    }
+
+                    personDiv.innerHTML = html;
+                    membersDiv.appendChild(personDiv);
+                });
+
+                genDiv.appendChild(membersDiv);
+
+                // Add connector line (except for last generation)
+                if (gen < 5 && generations[gen + 1].members.length > 0) {
+                    const connector = document.createElement('div');
+                    connector.className = 'timeline-connector';
+                    genDiv.appendChild(connector);
+                }
+
+                wrapper.appendChild(genDiv);
+            }
+
+            container.appendChild(wrapper);
+        }
+
+        // Keep old Tree of Life function for reference (can be removed later)
         function renderTreeOfLife() {
             const container = document.getElementById('treeOfLifeContainer');
             if (!container) {
@@ -5780,7 +5874,7 @@ Please send an email to: tyler.tyler.d@gmail.com
 
 ---
 
-💝 Optional: If you'd like to support the maintenance and development of this app, you can send a small donation via Venmo: @your-venmo-username
+💝 Optional: If you'd like to support the maintenance and development of this app, you can send a small donation via Venmo: @Tyler-Doerksen
 
 This is completely voluntary and appreciated!`;
 
